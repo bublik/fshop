@@ -1,0 +1,57 @@
+.header {
+  .navbar-default .navbar-nav a.active,
+  .navbar-default .navbar-nav a.active:hover,
+  .navbar-default .navbar-nav a.active:focus {
+    color: #555555;
+    background-color: #d7d7d7;
+    padding: 15px;
+  }
+  .logo {
+    font-family: 'Cookie', sans-serif;
+    font-size: 72px;
+    float: left;
+    color: #000;
+    text-decoration: none;
+    :hover {
+      color: #000;
+
+    }
+  }
+
+  .slogan {
+    font-size: 25px;
+    font-weight: 300;
+    text-align: center;
+    margin: 0px auto 0px auto;
+    margin-top: 35px;
+  }
+
+  .navbar-collapse {
+    padding-left: 0px;
+    padding-right: 0px;
+  }
+
+  .form-search {
+    position: relative;
+
+    &:before {
+      display: block;
+      width: 18px;
+      height: 18px;
+      content: "\e003";
+      font-family: 'Glyphicons Halflings';
+      background-position: -48px 0;
+      position: absolute;
+      top: 8px;
+      right: 25px;
+      font-size: 18px;
+      opacity: .7;
+      z-index: 1000;
+    }
+
+    input {
+      width: 350px;
+      padding-right: 50px;
+    }
+  }
+}

@@ -1,0 +1,25 @@
+.well{style: 'margin-top: 15%; position: relative'}
+  .text-center
+    %h2 You will be redirected to the #{link_to(@shop ? @shop.name : @redirect_url, @redirect_url)} automatically in 10 seconds
+    - if @coupon
+      = hidden_field_tag :code, @coupon.code
+      %h3
+        = @coupon.name
+        - unless @coupon.code.blank?
+          #code_button.btn.btn-primary.btn-lg= @coupon.code
+          %br
+          %small.text-muted Click on button to copy code.
+    %br
+    = link_to('Back to Fshop', :back )
+
+:javascript
+  $(document).ready(function(){
+    $('#code_button').zclip({
+      path:'/ZeroClipboard.swf',
+      copy:$('#code').val(),
+      clickAfter: false})
+     setTimeout("location.href = '#{@redirect_url}';",10000);
+   });
+
+
+

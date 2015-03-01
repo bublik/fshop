@@ -1,0 +1,4 @@
+- if @question.valid?
+  $('#new_question').replaceWith("#{j content_tag(:div, 'Your question was sent!', class: 'alert alert-success')}")
+- else
+  $('#new_question').replaceWith("#{j render('questions/form') }")

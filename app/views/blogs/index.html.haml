@@ -1,0 +1,12 @@
+%section.blog.container
+  %section.post-list
+    - @blogs.decorate.each do |blog|
+      %article
+        %header
+          %h2= blog.title
+          = blog.date
+        %section.post-content
+          %p!= blog.preview
+          = link_to('Читать дальше →', blog, class: 'readmore', title: blog.title)
+
+  = paginate(@blogs)

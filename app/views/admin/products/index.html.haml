@@ -1,0 +1,29 @@
+%h1 Listing products
+
+%table.table.table-hover.item-list
+  %tr
+    %th Товар
+    %th Ключевые слова
+    %th Цена
+    %th Состояние
+    %th Управление
+
+  - @products.decorate.each do |product|
+    %tr.item-item[product.object]
+      %td.text-center{style: 'width: 200px'}
+        = link_to(product.thumb_image, product.object)
+        %div= product.name
+        %label= product.shop
+      %td
+        = product.admin_tags_list
+        %hr
+        Ключевые слова: #{product.keywords}
+      %td
+        = product.price
+      %td= product.state
+      %td
+        = link_to 'Изменить', edit_admin_product_path(product), class: 'btn btn-xs btn-info'
+        = link_to 'Удалить', admin_product_path(product), :method => :delete, :data => { :confirm => 'Вы уверены?' }, remote: true, class: 'btn btn-xs btn-warning'
+
+.text-center
+  = paginate(@products)

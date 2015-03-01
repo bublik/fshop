@@ -1,0 +1,20 @@
+%h1 Listing posts
+.text-right
+  = paginate(@blogs)
+  = link_to 'Add New', new_admin_blog_path, class: 'btn btn-success'
+
+%section.blog.container
+  %section.post-list
+    - @blogs.decorate.each do |blog|
+      %article[blog.object]
+        %header
+          %h2= blog.title
+          = blog.date
+        %section.post-content
+          %p!= blog.preview
+          %div
+            = link_to 'Show', blog, class: 'readmore', title: blog.title, target: 'blank', class: 'btn btn-default btn-xs'
+            = link_to 'Edit', edit_admin_blog_path(blog), class: 'btn btn-default btn-xs'
+            = link_to 'Destroy', admin_blog_path(blog), :method => :delete, remote: true, :data => { :confirm => 'Are you sure?' }, class: 'btn btn-default btn-xs'
+.text-right
+  = paginate(@blogs)

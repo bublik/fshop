@@ -1,0 +1,11 @@
+= simple_form_for [:admin, @shop] do |f|
+  = f.input :name
+  = f.input :logo, as: :file
+  = f.input :target_url
+  = f.input :shipping, as: :text
+  = f.input :affiliate_network_id
+  = f.input :affiliate_network_merchant_id
+
+  .row
+    .col-xs-6.col-sm-offset-6
+      = f.submit 'Save', class: 'btn btn-success'

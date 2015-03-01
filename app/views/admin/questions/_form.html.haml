@@ -1,0 +1,13 @@
+= simple_form_for [:admin, @question] do |f|
+  = f.input :parent_id, as: :hidden
+  .row
+    .col-xs-15
+      = f.input_field :username, label: false, placeholder: 'Your name'
+    .col-xs-15
+      = f.input_field :email, label: false, placeholder: 'Enter email'
+  %br
+  .row
+    .col-xs-30
+      = f.input_field :message, as: :text, label: false, rows: 5, placeholder: 'Add your response'
+  %br
+    = f.submit 'Save', class: 'btn btn-default'

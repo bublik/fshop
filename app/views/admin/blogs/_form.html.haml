@@ -1,0 +1,8 @@
+= simple_form_for [:admin, @blog] do |f|
+  = f.input :title
+  = f.input :preview, as: :ckeditor, input_html: { ckeditor: {toolbar: 'mini', height: '180'}}
+  %br
+  = f.input :body, as: :ckeditor, input_html: { ckeditor: {toolbar: 'mini', height: '400'}}
+
+  %br
+  = f.submit 'Save', class: 'btn btn-success'

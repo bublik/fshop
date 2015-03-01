@@ -1,0 +1,9 @@
+%section.blog.container
+  %section.post-list
+    %article
+      %header
+        %h1= @blog.title
+        = @blog.date
+      %section.post-content
+        %p!= @blog.body
+

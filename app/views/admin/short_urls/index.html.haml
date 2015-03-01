@@ -1,0 +1,30 @@
+%h2
+  Listing SEO pages
+  = link_to 'New Short url', new_admin_short_url_path, class: 'btn btn-success'
+
+%table.short_urls.table.table-hover
+  %tr
+    %th Meta
+    %th Style typs
+    %th Filter
+    %th
+
+  - @short_urls.each do |short_url|
+    %tr
+      %td
+        = link_to(short_url.seo_url, seo_url_path(seo_url: short_url.seo_url))
+        %h4 Title:
+        = short_url.title
+        %h4 Descriotion:
+        = short_url.description
+        %h5 Keywords
+        = short_url.keywords
+      %td= short_url.style_typs
+      %td
+        %pre= short_url.filter
+      %td
+        = link_to 'Show', seo_url_path(seo_url: short_url.seo_url)
+        = link_to 'Edit', edit_admin_short_url_path(short_url)
+        = link_to 'Destroy', admin_short_url_path(short_url), :method => :delete, :data => { :confirm => 'Are you sure?' }
+
+= paginate(@short_urls)

@@ -1,0 +1,11 @@
+%h1 New request from Contact Us page
+
+%div
+  %label User name:
+  = @question.username
+
+%div
+  %label Email:
+  = @question.email
+
+%pre= @question.message

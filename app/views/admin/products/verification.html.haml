@@ -1,0 +1,13 @@
+.new-items.item-list.verification
+  .row
+    - @products.decorate.each do |product|
+      .col-xs-15.col-sm-10.col-md-6
+        = div_for product, class: 'pending', data: {id: product.id}, style: 'height: 300px' do
+          = link_to(image_tag(product.original_image, width: '100%'), admin_product_path(product, state: 'verify'), remote: true, method: :put)
+        .title
+          %div= link_to(product.name, product.link)
+          %em= product.shop
+        .description= product.description
+        = link_to('read more', '#', class: 'more', data: {target: "#{dom_id(product.object)}"})
+  .row.text-right
+    = link_to('Next', verification_admin_products_path, remote: true, class: 'btn btn-success next')

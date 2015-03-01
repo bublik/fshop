@@ -1,0 +1,10 @@
+.col-xs-5.tag_type{id: tag_type}
+  %fieldset
+    %legend= t(tag_type) #tag_type.to_s.humanize
+    %ul.edit-tags.list-unstyled
+      - product.cashed_context_tags(tag_type).each do |tag|
+        %li
+          %label
+            = check_box_tag "product[#{tag_type}_list][]", tag, (checked = product.send("#{tag_type}_list".to_sym).include?(tag))
+            = tag
+    = text_field_tag :new_tag, '', data: {target: "#{tag_type}"}, placeholder: 'добавить новый тег', class: ''

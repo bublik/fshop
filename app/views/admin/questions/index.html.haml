@@ -1,0 +1,42 @@
+%h1
+  Questions
+  = link_to('All', admin_questions_path, class: 'btn btn-default')
+  = link_to('Pending', admin_questions_path(state: 'pending'), class: 'btn btn-default')
+
+%table.table.table-hover
+  %tr
+    %th Product
+    %th User
+    %th Message
+    %th State
+    %th Actions
+    %th Updated At
+
+  - @questions.decorate.each do |question|
+    %tr[question.object]
+      %td.text-center= link_to(question.product_image, question.object.product, target: '_blank')
+      %td
+        = question.username
+        %div= question.email
+      %td
+        = question.message
+        - question.children.each do |child|
+          %hr
+          = div_for(child) do
+            = simple_format(child.message)
+            %div
+              = link_to('Edit', edit_admin_question_path(child))
+              = link_to 'Destroy', admin_question_path(child), remote: true, method: :delete, data: { confirm: 'Are you sure?' }
+      %td.state
+        = question.state
+        - if question.pending?
+          %div= link_to 'Mark as valid', mark_as_valid_admin_question_path(question), remote: true
+      %td
+        %ul.list-unstyled
+          %li= link_to 'Add response', new_admin_question_path(parent_id: question)
+          %li= link_to 'Edit', edit_admin_question_path(question)
+          %li= link_to 'Destroy', admin_question_path(question), remote: true, method: :delete, data: { confirm: 'Are you sure?' }
+      %td
+        = question.updated_at.to_s(:short)
+.text-center
+  = paginate @questions

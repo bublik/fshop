@@ -1,0 +1,27 @@
+-#.row
+  .col-xs-30
+    %img.img-responsive{:src => "http://placehold.it/1200x300"}/
+.row
+  .col-xs-30.mission
+    Подбирайте коллекции из сотен интернет магазинов
+
+.new-items.item-list
+  %h2 Новые поступления
+  .row
+    - @products.each do |product|
+      .col-xs-15.col-sm-10.col-md-6.item-item
+        = link_to(product.preview_image, product, title: product.name)
+        = link_to(product.name, product, title: product.name, class: 'title')
+        = product.price
+  .row
+    .col-xs-30.text-center
+      = link_to('Больше', products_path, class: 'btn btn-primary btn-lg')
+
+.social
+  .row
+    .col-sm-30.col-md-15.latest-blog-posts
+      %h2 Последние записи в блоге
+      - @blogs.each do |blog|
+        .port= link_to(blog.title, blog, title: blog.title)
+    .col-sm-30.col-md-15
+      %h2 Присоединяйтесь к нам в соц сетях

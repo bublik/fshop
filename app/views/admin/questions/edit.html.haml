@@ -1,0 +1,6 @@
+%h1 Update #{@question.parent_id ? 'response' : 'question'}
+- unless @question.parent_id
+  = link_to(@question.decorate.product_image, @question.product, target: '_blank')
+.row
+  .col-xs-20
+    = render 'form'

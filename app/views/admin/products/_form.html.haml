@@ -1,0 +1,34 @@
+= simple_form_for [:admin, @product] do |f|
+  .row
+    .col-xs-10
+      = @product.image
+    .col-xs-20
+      .form-group
+        .col-sm-6
+          %label Shop
+        .col-sm-18
+          = @product.shop
+      .form-group
+        .col-sm-6
+          %label Brand
+        .col-sm-18= @product.brand
+      = f.input :name
+      = f.input :description, as: :text
+      .form-group
+        .col-sm-6
+          %label Original price
+        .col-sm-18= @product.original_price
+      .form-group
+        .col-sm-6
+          %label Price
+        .col-sm-18= @product.price
+      .form-group
+        .col-sm-6
+          %label Keywords
+        .col-sm-18
+          = @product.keywords
+  .row
+    = render partial: 'admin/products/tags_select_list', collection: tag_types, as: :tag_type, locals:{ product: @product }
+
+  %br
+  = f.submit 'Save', class: 'btn btn-success pull-right'

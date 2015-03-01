@@ -1,0 +1,12 @@
+%h1 Add response
+
+.row
+  .col-xs-20
+    - if @original_question
+      .row
+        .col-xs-10.text-center
+          = @original_question.product_image
+        .col-xs-20
+          = @original_question.message
+
+    = render 'form'

@@ -1,0 +1,58 @@
+- if defined?(@page)
+  - content_for(:page_title) do
+    = @page.title
+
+  - content_for(:description) do
+    = @page.description
+
+  - content_for(:keywords) do
+    = @page.keywords
+
+- max_price = Product.maximum(:price)
+- enabled_price_min = params[:product] ? params[:product][:price][:min] : 0
+- enabled_price_max = params[:product] ? params[:product][:price][:max] : max_price
+
+:javascript
+  var max_price = #{max_price};
+  var enabled_price_min = #{enabled_price_min};
+  var enabled_price_max = #{enabled_price_max};
+
+%section.item-list
+  .row
+    %aside#searchfilter.col-sm-30.col-md-6
+      = form_tag '/products/search', id: 'filter_form', remote: true, method: :get do
+        - if params[:q].present?
+          = check_box_tag :q, params[:q], params[:q].blank? ? false : 'checked', class: 'hidden'
+        %ul#accordion.filters
+          - tag_types.each do |tag_type|
+            %li{ class: visible_tag_lists.include?(tag_type) ? nil : 'hidden'}
+              %section.accordion
+                %header.accordion-header
+                  %a{href: "##{tag_type}", data: {toggle: 'collapse', parent: '#accordion'}}= tag_type.to_s.humanize
+                .panel-collapse.collapse.accordion-body{id: tag_type}
+                  - Product.cashed_context_tags(tag_type).each do |tag|
+                    %label.checkbox
+                      = check_box_tag "product[#{tag_type}][]", tag, (selected_tags.include?(tag) ? 'checked' : false)
+                      = tag
+          %li
+            %section.accordion
+              %header.accordion-header
+                %label Price
+              = hidden_field_tag "product[price][min]", 0, id: 'min_price'
+              = hidden_field_tag "product[price][max]", max_price, id: 'max_price'
+              #price_slider
+      - if defined?(@page)
+        .style-tips
+          %h4 Style tips
+          %p!= @page.style_typs
+
+    #selected_tags.col-sm-120.col-md-24
+      - if defined?(@page)
+        %h3= @page.title
+      != selected_tag_link
+    #products
+      = render(@products)
+  .text-center
+    = paginate(@products, remote: true)
+
+

@@ -1,0 +1,5 @@
+- products.each do |product|
+  .col-xs-10.col-md-30.related-item
+    %a.title{href: product_path(product), title: product.object.name}= product.image_responsive
+    %a.title{href: product_path(product), title: product.object.name}= product.name
+    = product.price

@@ -1,0 +1,12 @@
+= simple_form_for [:admin, @short_url] do |f|
+  = f.input :seo_url, hint: 'Should url string'
+  = f.input :full_url,  hint: 'Full url with products filter limit (1024)'
+  = f.input :style_typs, as: :text
+  %fieldset
+    %legend Meta
+    = f.input :title, hint: 'Page title (255 chars)'
+    = f.input :description, hint: 'Page description (255 chars)'
+    = f.input :keywords, hint: 'Page keywords, split by comas'
+  .row
+    .col-xs-3.col-sm-offset-3
+    = f.submit 'Save', class: 'btn btn-success'

@@ -1,0 +1,7 @@
+= simple_form_for [:admin, @data_feed.shop, @data_feed] do |f|
+  = f.input :shop_id, as: :hidden
+  = f.input :url
+  = f.input :feed_type, collection: DataFeed.feed_types.keys, include_blank: false
+  .row
+    .col-xs-6.col-sm-offset-6
+      = f.submit 'Save', class: 'btn btn-success'

@@ -1,0 +1,6 @@
+%h1 Editing product ##{@product.to_param}
+.pull-right
+  = link_to('Open Product', @product.link, class: 'btn btn-info')
+  = link_to 'Destroy', admin_product_path(@product), :method => :delete, :data => { :confirm => 'Are you sure?'}, class: 'btn btn-warning'
+= render 'form'
+

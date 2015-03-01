@@ -1,0 +1,26 @@
+%h2
+  Список магазинов
+  = link_to 'Новый магазин', new_admin_shop_path, class: 'btn btn-success pull-right'
+
+%table.table.table-hover
+  %tr
+    %th Магазин
+    %th Информация о доставке
+    %th Партнерская сеть ID
+    %th Партнер продавец ID
+    %th Управление
+
+  - @shops.decorate.each do |shop|
+    %tr
+      %td
+        = shop.logo
+        %div= shop.name
+        %div= link_to("Адреса экспорта #{shop.data_feeds_count}", admin_shop_data_feeds_path(shop))
+      %td= shop.shipping
+      %td= shop.affiliate_network_id
+      %td= shop.affiliate_network_merchant_id
+      %td
+        = link_to 'Изменить', edit_admin_shop_path(shop)
+        = link_to 'Удалить', [:admin, shop], :method => :delete, :data => { :confirm => 'Are you sure?' }
+
+= paginate @shops

@@ -1,0 +1,16 @@
+= simple_form_for @question ||= Question.new(product_id: @product.id), html: {role: 'form', class: 'question-form', remote: true} do |f|
+  .ask-question Задайте вопрос
+  - if @question.errors.present?
+    .alert.alert-danger= @question.errors.full_messages.join(', ')
+  = f.input :product_id, as: :hidden
+  .row
+    .col-md-15
+      %label.sr-only Name
+      = f.input_field :username, label: false, placeholder: 'Ваше имя'
+    .col-md-15
+      %label.sr-only Email aditem
+      = f.input_field :email, label: false, placeholder: 'Ваш Емайл'
+  .row
+    .col-md-30
+      = f.text_area :message, label: false, placeholder: 'Напишите Ваш отзыв или вопрос', rows: '3', class: 'form-control'
+  = f.submit 'Отправить', class: 'btn btn-default'

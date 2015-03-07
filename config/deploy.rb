@@ -2,7 +2,7 @@
 lock '3.2.1'
 
 set :application, 'fshop'
-set :repo_url, 'git@54.79.86.67:fshop.git'
+set :repo_url, 'git@github.com:bublik/fshop.git'
 
 set :rvm_type, :user
 set :rvm_ruby_version, '2.2.0'

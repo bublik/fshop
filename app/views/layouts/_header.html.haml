@@ -11,25 +11,34 @@
               = link_to_unless_current('Новые', products_path) do
                 %a{href: '#', class: 'active'} Новые
             %li
-              = link_to_unless_current('Свадебные', '/wedding-items') do
-                %a{href: '#', class: 'active'} Свадебные
+              = link_to_unless_current('Одежда', '/clothing') do
+                %a{href: '#', class: 'active'} Одежда
             %li
-              = link_to_unless_current('Официальные', '/formal-items') do
-                %a{href: '#', class: 'active'} Официальные
-            %li
-              = link_to_unless_current('Вечерние', '/evening-items') do
-                %a{href: '#', class: 'active'} Вечерние
-            %li
-              = link_to_unless_current('Для встреч', '/party-items') do
-                %a{href: '#', class: 'active'} Для встреч
-            %li
-              = link_to_unless_current('Коктельные', '/coctail-items') do
-                %a{href: '#', class: 'active'} Коктельные
-            %li
-              = link_to_unless_current('Бальные', '/prom-items') do
-                %a{href: '#', class: 'active'} Бальные
-            %li
-              = link_to_unless_current('Дешовые', '/cheap-items') do
-                %a{href: '#', class: 'active'} Дешовые
+              = link_to_unless_current('Белье', '/linen') do
+                %a{href: '#', class: 'active'} Белье
+            -#%li
+            -#  = link_to_unless_current('Новые', products_path) do
+            -#    %a{href: '#', class: 'active'} Новые
+            -#%li
+            -#  = link_to_unless_current('Свадебные', '/wedding-items') do
+            -#    %a{href: '#', class: 'active'} Свадебные
+            -#%li
+            -#  = link_to_unless_current('Официальные', '/formal-items') do
+            -#    %a{href: '#', class: 'active'} Официальные
+            -#%li
+            -#  = link_to_unless_current('Вечерние', '/evening-items') do
+            -#    %a{href: '#', class: 'active'} Вечерние
+            -#%li
+            -#  = link_to_unless_current('Для встреч', '/party-items') do
+            -#    %a{href: '#', class: 'active'} Для встреч
+            -#%li
+            -#  = link_to_unless_current('Коктельные', '/coctail-items') do
+            -#    %a{href: '#', class: 'active'} Коктельные
+            -#%li
+            -#  = link_to_unless_current('Бальные', '/prom-items') do
+            -#    %a{href: '#', class: 'active'} Бальные
+            -#%li
+            -#  = link_to_unless_current('Дешовые', '/cheap-items') do
+            -#    %a{href: '#', class: 'active'} Дешовые
           %form.form-search.navbar-form.navbar-right{action: search_products_path}
             %input.form-control.search{placeholder: 'Найти...', name: 'q', value: params[:q], type: 'text'}/

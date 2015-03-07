@@ -1,274 +1,677 @@
--- MySQL dump 10.13  Distrib 5.5.15, for osx10.7 (i386)
 --
--- Host: localhost    Database: fshop_development
--- ------------------------------------------------------
--- Server version	5.5.15
-
-/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
-/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
-/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
-/*!40101 SET NAMES utf8 */;
-/*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
-/*!40103 SET TIME_ZONE='+00:00' */;
-/*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
-/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
-/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
-/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
-
---
--- Table structure for table `blogs`
+-- PostgreSQL database dump
 --
 
-DROP TABLE IF EXISTS `blogs`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `blogs` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `title` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `preview` text COLLATE utf8_unicode_ci,
-  `body` text COLLATE utf8_unicode_ci,
-  `slug` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `created_at` datetime DEFAULT NULL,
-  `updated_at` datetime DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `index_blogs_on_slug` (`slug`)
-) ENGINE=InnoDB AUTO_INCREMENT=201 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
+SET statement_timeout = 0;
+SET client_encoding = 'UTF8';
+SET standard_conforming_strings = on;
+SET check_function_bodies = false;
+SET client_min_messages = warning;
 
 --
--- Table structure for table `ckeditor_assets`
+-- Name: plpgsql; Type: EXTENSION; Schema: -; Owner: -
 --
 
-DROP TABLE IF EXISTS `ckeditor_assets`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `ckeditor_assets` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `data_file_name` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  `data_content_type` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `data_file_size` int(11) DEFAULT NULL,
-  `assetable_id` int(11) DEFAULT NULL,
-  `assetable_type` varchar(30) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `type` varchar(30) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `width` int(11) DEFAULT NULL,
-  `height` int(11) DEFAULT NULL,
-  `created_at` datetime DEFAULT NULL,
-  `updated_at` datetime DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  KEY `idx_ckeditor_assetable_type` (`assetable_type`,`type`,`assetable_id`),
-  KEY `idx_ckeditor_assetable` (`assetable_type`,`assetable_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
+CREATE EXTENSION IF NOT EXISTS plpgsql WITH SCHEMA pg_catalog;
+
 
 --
--- Table structure for table `coupons`
+-- Name: EXTENSION plpgsql; Type: COMMENT; Schema: -; Owner: -
 --
 
-DROP TABLE IF EXISTS `coupons`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `coupons` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `shop_id` int(11) DEFAULT NULL,
-  `name` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `code` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `start_date` datetime DEFAULT NULL,
-  `end_date` datetime DEFAULT NULL,
-  `target_url` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `created_at` datetime DEFAULT NULL,
-  `updated_at` datetime DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  KEY `index_coupons_on_shop_id` (`shop_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=1001 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
+COMMENT ON EXTENSION plpgsql IS 'PL/pgSQL procedural language';
+
 
 --
--- Table structure for table `data_feeds`
+-- Name: hstore; Type: EXTENSION; Schema: -; Owner: -
 --
 
-DROP TABLE IF EXISTS `data_feeds`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `data_feeds` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `shop_id` int(11) DEFAULT NULL,
-  `url` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `feed_type` int(11) DEFAULT '0',
-  `created_at` datetime DEFAULT NULL,
-  `updated_at` datetime DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  KEY `index_data_feeds_on_shop_id` (`shop_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=201 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
+CREATE EXTENSION IF NOT EXISTS hstore WITH SCHEMA public;
+
 
 --
--- Table structure for table `products`
+-- Name: EXTENSION hstore; Type: COMMENT; Schema: -; Owner: -
 --
 
-DROP TABLE IF EXISTS `products`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `products` (
-  `sync_hash` varchar(36) COLLATE utf8_unicode_ci NOT NULL,
-  `shop_id` int(11) DEFAULT NULL,
-  `sku` varchar(100) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `slug` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `name` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `description` varchar(2000) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `link` varchar(512) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `brand` varchar(100) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `keywords` varchar(500) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `currency` varchar(3) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `original_image` varchar(512) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `image` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `original_price` int(11) DEFAULT NULL,
-  `price` int(11) DEFAULT NULL,
-  `gender` varchar(20) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `state` int(11) DEFAULT '0',
-  `created_at` datetime DEFAULT NULL,
-  `updated_at` datetime DEFAULT NULL,
-  `is_active` tinyint(1) DEFAULT '1',
-  `cached_tags` text COLLATE utf8_unicode_ci,
-  PRIMARY KEY (`sync_hash`),
-  KEY `index_products_on_shop_id` (`shop_id`),
-  KEY `index_products_on_name` (`name`),
-  KEY `index_products_on_price` (`price`),
-  KEY `index_products_on_state` (`state`),
-  KEY `index_products_on_slug` (`slug`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
+COMMENT ON EXTENSION hstore IS 'data type for storing sets of (key, value) pairs';
+
+
+SET search_path = public, pg_catalog;
+
+SET default_tablespace = '';
+
+SET default_with_oids = false;
 
 --
--- Table structure for table `questions`
+-- Name: blogs; Type: TABLE; Schema: public; Owner: -; Tablespace: 
 --
 
-DROP TABLE IF EXISTS `questions`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `questions` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `product_id` text COLLATE utf8_unicode_ci,
-  `username` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `email` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `message` text COLLATE utf8_unicode_ci,
-  `state` int(11) DEFAULT '0',
-  `parent_id` int(11) DEFAULT NULL,
-  `lft` int(11) DEFAULT NULL,
-  `rgt` int(11) DEFAULT NULL,
-  `created_at` datetime DEFAULT NULL,
-  `updated_at` datetime DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  KEY `index_questions_on_state` (`state`),
-  KEY `index_questions_on_parent_id` (`parent_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=604 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
+CREATE TABLE blogs (
+    id integer NOT NULL,
+    title character varying,
+    preview text,
+    body text,
+    slug character varying,
+    created_at timestamp without time zone,
+    updated_at timestamp without time zone
+);
+
 
 --
--- Table structure for table `schema_migrations`
+-- Name: blogs_id_seq; Type: SEQUENCE; Schema: public; Owner: -
 --
 
-DROP TABLE IF EXISTS `schema_migrations`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `schema_migrations` (
-  `version` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  UNIQUE KEY `unique_schema_migrations` (`version`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
+CREATE SEQUENCE blogs_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
 
 --
--- Table structure for table `shops`
+-- Name: blogs_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
 --
 
-DROP TABLE IF EXISTS `shops`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `shops` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `name` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `shipping` text COLLATE utf8_unicode_ci,
-  `affiliate_network_id` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `affiliate_network_merchant_id` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `created_at` datetime DEFAULT NULL,
-  `updated_at` datetime DEFAULT NULL,
-  `logo` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `data_feeds_count` int(11) DEFAULT '0',
-  `target_url` varchar(500) COLLATE utf8_unicode_ci DEFAULT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=201 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
+ALTER SEQUENCE blogs_id_seq OWNED BY blogs.id;
+
 
 --
--- Table structure for table `short_urls`
+-- Name: ckeditor_assets; Type: TABLE; Schema: public; Owner: -; Tablespace: 
 --
 
-DROP TABLE IF EXISTS `short_urls`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `short_urls` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `seo_url` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `full_url` varchar(1024) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `title` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `description` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `keywords` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `style_typs` text COLLATE utf8_unicode_ci,
-  `filter` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `created_at` datetime DEFAULT NULL,
-  `updated_at` datetime DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `index_short_urls_on_seo_url` (`seo_url`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
+CREATE TABLE ckeditor_assets (
+    id integer NOT NULL,
+    data_file_name character varying NOT NULL,
+    data_content_type character varying,
+    data_file_size integer,
+    assetable_id integer,
+    assetable_type character varying(30),
+    type character varying(30),
+    width integer,
+    height integer,
+    created_at timestamp without time zone,
+    updated_at timestamp without time zone
+);
+
 
 --
--- Table structure for table `taggings`
+-- Name: ckeditor_assets_id_seq; Type: SEQUENCE; Schema: public; Owner: -
 --
 
-DROP TABLE IF EXISTS `taggings`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `taggings` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `tag_id` int(11) DEFAULT NULL,
-  `taggable_id` varchar(36) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `taggable_type` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `tagger_id` int(11) DEFAULT NULL,
-  `tagger_type` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `context` varchar(128) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `created_at` datetime DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `taggings_idx` (`tag_id`,`taggable_id`,`taggable_type`,`context`,`tagger_id`,`tagger_type`),
-  KEY `index_taggings_on_taggable_id_and_taggable_type_and_context` (`taggable_id`,`taggable_type`,`context`)
-) ENGINE=InnoDB AUTO_INCREMENT=247 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
+CREATE SEQUENCE ckeditor_assets_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
 
 --
--- Table structure for table `tags`
+-- Name: ckeditor_assets_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
 --
 
-DROP TABLE IF EXISTS `tags`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `tags` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `name` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `taggings_count` int(11) DEFAULT '0',
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `index_tags_on_name` (`name`)
-) ENGINE=InnoDB AUTO_INCREMENT=31 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-/*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
+ALTER SEQUENCE ckeditor_assets_id_seq OWNED BY ckeditor_assets.id;
 
-/*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
-/*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
-/*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
-/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
-/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
-/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
-/*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2014-07-28  9:43:23
+--
+-- Name: coupons; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE TABLE coupons (
+    id integer NOT NULL,
+    shop_id integer,
+    name character varying,
+    code character varying,
+    start_date timestamp without time zone,
+    end_date timestamp without time zone,
+    target_url character varying(500),
+    created_at timestamp without time zone,
+    updated_at timestamp without time zone
+);
+
+
+--
+-- Name: coupons_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE coupons_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: coupons_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE coupons_id_seq OWNED BY coupons.id;
+
+
+--
+-- Name: data_feeds; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE TABLE data_feeds (
+    id integer NOT NULL,
+    shop_id integer,
+    url character varying,
+    feed_type integer DEFAULT 0,
+    created_at timestamp without time zone,
+    updated_at timestamp without time zone
+);
+
+
+--
+-- Name: data_feeds_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE data_feeds_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: data_feeds_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE data_feeds_id_seq OWNED BY data_feeds.id;
+
+
+--
+-- Name: products; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE TABLE products (
+    sync_hash character varying(100) NOT NULL,
+    shop_id integer,
+    sku character varying(100),
+    slug character varying,
+    name character varying,
+    description character varying(2000),
+    link character varying(512),
+    brand character varying(100),
+    keywords character varying(500),
+    currency character varying(3),
+    original_image character varying(512),
+    image character varying,
+    original_price integer,
+    price integer,
+    gender character varying(20),
+    state integer DEFAULT 0,
+    created_at timestamp without time zone,
+    updated_at timestamp without time zone,
+    is_active boolean DEFAULT true,
+    cached_tags text
+);
+
+
+--
+-- Name: questions; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE TABLE questions (
+    id integer NOT NULL,
+    product_id text,
+    username character varying,
+    email character varying,
+    message text,
+    state integer DEFAULT 0,
+    parent_id integer,
+    lft integer,
+    rgt integer,
+    created_at timestamp without time zone,
+    updated_at timestamp without time zone
+);
+
+
+--
+-- Name: questions_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE questions_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: questions_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE questions_id_seq OWNED BY questions.id;
+
+
+--
+-- Name: schema_migrations; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE TABLE schema_migrations (
+    version character varying NOT NULL
+);
+
+
+--
+-- Name: shops; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE TABLE shops (
+    id integer NOT NULL,
+    name character varying,
+    shipping text,
+    affiliate_network_id character varying,
+    affiliate_network_merchant_id character varying,
+    created_at timestamp without time zone,
+    updated_at timestamp without time zone,
+    logo character varying,
+    data_feeds_count integer DEFAULT 0,
+    target_url character varying(500)
+);
+
+
+--
+-- Name: shops_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE shops_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: shops_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE shops_id_seq OWNED BY shops.id;
+
+
+--
+-- Name: short_urls; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE TABLE short_urls (
+    id integer NOT NULL,
+    seo_url character varying,
+    full_url character varying(1024),
+    title character varying,
+    description character varying,
+    keywords character varying,
+    style_typs text,
+    filter character varying,
+    created_at timestamp without time zone,
+    updated_at timestamp without time zone
+);
+
+
+--
+-- Name: short_urls_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE short_urls_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: short_urls_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE short_urls_id_seq OWNED BY short_urls.id;
+
+
+--
+-- Name: taggings; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE TABLE taggings (
+    id integer NOT NULL,
+    tag_id integer,
+    taggable_id character varying(100),
+    taggable_type character varying,
+    tagger_id integer,
+    tagger_type character varying,
+    context character varying(128),
+    created_at timestamp without time zone
+);
+
+
+--
+-- Name: taggings_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE taggings_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: taggings_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE taggings_id_seq OWNED BY taggings.id;
+
+
+--
+-- Name: tags; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE TABLE tags (
+    id integer NOT NULL,
+    name character varying,
+    taggings_count integer DEFAULT 0
+);
+
+
+--
+-- Name: tags_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE tags_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: tags_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE tags_id_seq OWNED BY tags.id;
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY blogs ALTER COLUMN id SET DEFAULT nextval('blogs_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY ckeditor_assets ALTER COLUMN id SET DEFAULT nextval('ckeditor_assets_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY coupons ALTER COLUMN id SET DEFAULT nextval('coupons_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY data_feeds ALTER COLUMN id SET DEFAULT nextval('data_feeds_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY questions ALTER COLUMN id SET DEFAULT nextval('questions_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY shops ALTER COLUMN id SET DEFAULT nextval('shops_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY short_urls ALTER COLUMN id SET DEFAULT nextval('short_urls_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY taggings ALTER COLUMN id SET DEFAULT nextval('taggings_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY tags ALTER COLUMN id SET DEFAULT nextval('tags_id_seq'::regclass);
+
+
+--
+-- Name: blogs_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+--
+
+ALTER TABLE ONLY blogs
+    ADD CONSTRAINT blogs_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: ckeditor_assets_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+--
+
+ALTER TABLE ONLY ckeditor_assets
+    ADD CONSTRAINT ckeditor_assets_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: coupons_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+--
+
+ALTER TABLE ONLY coupons
+    ADD CONSTRAINT coupons_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: data_feeds_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+--
+
+ALTER TABLE ONLY data_feeds
+    ADD CONSTRAINT data_feeds_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: products_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+--
+
+ALTER TABLE ONLY products
+    ADD CONSTRAINT products_pkey PRIMARY KEY (sync_hash);
+
+
+--
+-- Name: questions_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+--
+
+ALTER TABLE ONLY questions
+    ADD CONSTRAINT questions_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: shops_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+--
+
+ALTER TABLE ONLY shops
+    ADD CONSTRAINT shops_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: short_urls_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+--
+
+ALTER TABLE ONLY short_urls
+    ADD CONSTRAINT short_urls_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: taggings_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+--
+
+ALTER TABLE ONLY taggings
+    ADD CONSTRAINT taggings_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: tags_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+--
+
+ALTER TABLE ONLY tags
+    ADD CONSTRAINT tags_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: idx_ckeditor_assetable; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE INDEX idx_ckeditor_assetable ON ckeditor_assets USING btree (assetable_type, assetable_id);
+
+
+--
+-- Name: idx_ckeditor_assetable_type; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE INDEX idx_ckeditor_assetable_type ON ckeditor_assets USING btree (assetable_type, type, assetable_id);
+
+
+--
+-- Name: index_blogs_on_slug; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE UNIQUE INDEX index_blogs_on_slug ON blogs USING btree (slug);
+
+
+--
+-- Name: index_coupons_on_shop_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE INDEX index_coupons_on_shop_id ON coupons USING btree (shop_id);
+
+
+--
+-- Name: index_data_feeds_on_shop_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE INDEX index_data_feeds_on_shop_id ON data_feeds USING btree (shop_id);
+
+
+--
+-- Name: index_products_on_name; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE INDEX index_products_on_name ON products USING btree (name);
+
+
+--
+-- Name: index_products_on_price; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE INDEX index_products_on_price ON products USING btree (price);
+
+
+--
+-- Name: index_products_on_shop_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE INDEX index_products_on_shop_id ON products USING btree (shop_id);
+
+
+--
+-- Name: index_products_on_slug; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE INDEX index_products_on_slug ON products USING btree (slug);
+
+
+--
+-- Name: index_products_on_state; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE INDEX index_products_on_state ON products USING btree (state);
+
+
+--
+-- Name: index_questions_on_parent_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE INDEX index_questions_on_parent_id ON questions USING btree (parent_id);
+
+
+--
+-- Name: index_questions_on_product_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE INDEX index_questions_on_product_id ON questions USING btree (product_id);
+
+
+--
+-- Name: index_questions_on_state; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE INDEX index_questions_on_state ON questions USING btree (state);
+
+
+--
+-- Name: index_short_urls_on_seo_url; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE UNIQUE INDEX index_short_urls_on_seo_url ON short_urls USING btree (seo_url);
+
+
+--
+-- Name: index_taggings_on_taggable_id_and_taggable_type_and_context; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE INDEX index_taggings_on_taggable_id_and_taggable_type_and_context ON taggings USING btree (taggable_id, taggable_type, context);
+
+
+--
+-- Name: index_tags_on_name; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE UNIQUE INDEX index_tags_on_name ON tags USING btree (name);
+
+
+--
+-- Name: taggings_idx; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE UNIQUE INDEX taggings_idx ON taggings USING btree (tag_id, taggable_id, taggable_type, context, tagger_id, tagger_type);
+
+
+--
+-- Name: unique_schema_migrations; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE UNIQUE INDEX unique_schema_migrations ON schema_migrations USING btree (version);
+
+
+--
+-- PostgreSQL database dump complete
+--
+
+SET search_path TO "$user",public;
+
 INSERT INTO schema_migrations (version) VALUES ('20140707133403');
 
 INSERT INTO schema_migrations (version) VALUES ('20140708044337');
@@ -296,8 +699,6 @@ INSERT INTO schema_migrations (version) VALUES ('20140715090455');
 INSERT INTO schema_migrations (version) VALUES ('20140716035726');
 
 INSERT INTO schema_migrations (version) VALUES ('20140717052304');
-
-INSERT INTO schema_migrations (version) VALUES ('20140724043639');
 
 INSERT INTO schema_migrations (version) VALUES ('20140724043727');
 

@@ -1,6 +1,5 @@
-%h1 Editing product ##{@product.to_param}
+%h1 Редактирование ##{@product.to_param}
 .pull-right
-  = link_to('Open Product', @product.link, class: 'btn btn-info')
-  = link_to 'Destroy', admin_product_path(@product), :method => :delete, :data => { :confirm => 'Are you sure?'}, class: 'btn btn-warning'
+  = link_to('Открыть товар', @product.link, class: 'btn btn-info')
+  = link_to 'Удалить', admin_product_path(@product), :method => :delete, :data => { :confirm => 'Вы уверены?'}, class: 'btn btn-warning'
 = render 'form'
-

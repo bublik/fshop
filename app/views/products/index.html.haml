@@ -1,13 +1,7 @@
 - if defined?(@page)
-  - content_for(:page_title) do
-    = @page.title
-
-  - content_for(:description) do
-    = @page.description
-
-  - content_for(:keywords) do
-    = @page.keywords
-
+  - content_for(:page_title) {@page.title}
+  - content_for(:description) {@page.description}
+  - content_for(:keywords) {@page.keywords}
 - max_price = Product.maximum(:price)
 - enabled_price_min = params[:product] ? params[:product][:price][:min] : 0
 - enabled_price_max = params[:product] ? params[:product][:price][:max] : max_price
@@ -25,10 +19,10 @@
           = check_box_tag :q, params[:q], params[:q].blank? ? false : 'checked', class: 'hidden'
         %ul#accordion.filters
           - tag_types.each do |tag_type|
-            %li{ class: visible_tag_lists.include?(tag_type) ? nil : 'hidden'}
+            %li{ class: Product::VISIBLE_TAGS.include?(tag_type) ? nil : 'hidden'}
               %section.accordion
                 %header.accordion-header
-                  %a{href: "##{tag_type}", data: {toggle: 'collapse', parent: '#accordion'}}= tag_type.to_s.humanize
+                  %a{href: "##{tag_type}", data: {toggle: 'collapse', parent: '#accordion'}}= t(tag_type)
                 .panel-collapse.collapse.accordion-body{id: tag_type}
                   - Product.cashed_context_tags(tag_type).each do |tag|
                     %label.checkbox
@@ -37,13 +31,13 @@
           %li
             %section.accordion
               %header.accordion-header
-                %label Price
+                %label Цена
               = hidden_field_tag "product[price][min]", 0, id: 'min_price'
               = hidden_field_tag "product[price][max]", max_price, id: 'max_price'
               #price_slider
       - if defined?(@page)
         .style-tips
-          %h4 Style tips
+          %h4.styled Советы по стилю
           %p!= @page.style_typs
 
     #selected_tags.col-sm-120.col-md-24
@@ -54,5 +48,3 @@
       = render(@products)
   .text-center
     = paginate(@products, remote: true)
-
-

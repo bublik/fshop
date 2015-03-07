@@ -1,4 +1,7 @@
 $ ->
+  $('body').on 'click', '.select_all', (e) ->
+    $('.product.pending > a').trigger('click')
+
   $('body').on 'click', '.verification .next', (e) ->
     disable = []
     _.each $('.product.pending'), (link) ->

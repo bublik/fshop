@@ -1,6 +1,6 @@
 .well{style: 'margin-top: 15%; position: relative'}
   .text-center
-    %h2 You will be redirected to the #{link_to(@shop ? @shop.name : @redirect_url, @redirect_url)} automatically in 10 seconds
+    %h2 Вы будете перенаправлены на сайт #{link_to(@shop ? @shop.name : @redirect_url, @redirect_url)} автоматически через 10 секунд
     - if @coupon
       = hidden_field_tag :code, @coupon.code
       %h3
@@ -8,9 +8,9 @@
         - unless @coupon.code.blank?
           #code_button.btn.btn-primary.btn-lg= @coupon.code
           %br
-          %small.text-muted Click on button to copy code.
+          %small.text-muted Нажмите на кнопку что бы скопировать скидочный код.
     %br
-    = link_to('Back to Fshop', :back )
+    = link_to('Вернуться на сайт.', :back )
 
 :javascript
   $(document).ready(function(){
@@ -20,6 +20,3 @@
       clickAfter: false})
      setTimeout("location.href = '#{@redirect_url}';",10000);
    });
-
-
-

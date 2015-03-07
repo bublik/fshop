@@ -1,9 +1,5 @@
 module ProductsHelper
 
-  def visible_tag_lists
-    [:length, :colour, :collar_type, :body_type, :sleeve_type, :length_of_sleeve, :fabric]
-  end
-
   def selected_tag_link
     selected_tags.map do |tag_name|
       link_to(tag_name, tag_products_path(tag_name), class: 'selected_tag btn btn-default btn-xs')

@@ -285,6 +285,7 @@ ru:
   style: Стиль
   other_detail: Другое
   fabric: Производитель
+  textile: Ткань
   views:
     pagination:
       first: Первая

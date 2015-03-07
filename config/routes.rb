@@ -55,7 +55,7 @@ Rails.application.routes.draw do
     [user, password] == [Rails.application.secrets.admin_user, Rails.application.secrets.admin_password]
   end
 
-  match '/*seo_url(:format)', to: 'products#short', as: :seo_url, via: :get
+  match '/*seo_url', to: 'products#short', as: :seo_url, via: :get
 
 # Example of regular route:
 #   get 'products/:id' => 'catalog#view'

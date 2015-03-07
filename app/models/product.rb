@@ -31,9 +31,10 @@ class Product < ActiveRecord::Base
   self.primary_key = 'sync_hash'
 
   mount_uploader :image, ImageUploader
-  acts_as_taggable_on :colour, :length, :occasion, :pattern, :collar_type, :body_type, :back, :sleeve_type,
-                      :length_of_sleeve, :neckline_type, :waistline, :belt_type, :hemline, :item_shape, :skirt_type,
-                      :item_type, :style, :other_detail, :fabric
+  acts_as_taggable_on :other_detail, :fabric, :colour, :textile, :item_type, :style, :length, :occasion, :pattern,
+                      :collar_type, :body_type, :back, :sleeve_type,
+                      :length_of_sleeve, :neckline_type, :waistline, :belt_type, :hemline, :item_shape, :skirt_type
+  VISIBLE_TAGS = [:length, :colour, :collar_type, :body_type, :sleeve_type, :length_of_sleeve, :fabric]
 
   belongs_to :shop
   has_many :questions, -> { where('questions.state = ?', Question.states[:verified]) }
@@ -128,11 +129,11 @@ class Product < ActiveRecord::Base
   def self.create_from_offer(shop_id, offer)
     #  image          :string(255)
     #  gender         :string(20)
-    product = find_or_initialize_by(sync_hash: Digest::SHA256.hexdigest("#{shop_id}-#{offer.id}-#{offer.price}")[0..35])
+    product = find_or_initialize_by(sync_hash: Digest::SHA256.hexdigest("#{shop_id}-#{offer.id}")[0..35])
     product.attributes = {
       shop_id: shop_id,
       sku: offer.id,
-      name: offer.name,
+      name: offer.name || offer.model,
       description: offer.description[0..1999],
       link: offer.url,
       original_image: offer.picture,

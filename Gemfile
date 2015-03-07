@@ -3,10 +3,13 @@ ruby '2.2.0'
 
 gem 'rails', '4.2.0'
 # Use mysql as the database for Active Record
-gem 'mysql2'
+#gem 'mysql2'
+gem 'pg'
+
 gem 'aasm'
 gem 'awesome_nested_set'
 gem 'sidekiq'
+gem 'responders', '~> 2.0'
 gem 'sinatra', require: false
 gem 'slim'
 

@@ -19,7 +19,7 @@ class Blog < ActiveRecord::Base
   validates_presence_of :title, :preview, :body
 
   def self.last_records(limit = 5)
-    Rails.cache.fetch("blog_last_records_#{limit}", expires_in: 5.minutes) do
+    Rails.cache.fetch("blog_last_#{limit}", expires_in: 5.minutes) do
       self.limit(limit).to_a
     end
   end

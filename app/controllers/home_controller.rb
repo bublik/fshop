@@ -20,7 +20,7 @@ class HomeController < ApplicationController
       @question = Question.new(question_params)
       @question.feedback = true
      if @question.valid? && Notifications.contact_us(@question).deliver
-       flash[:notice] = 'Your question was sent.'
+       flash[:notice] = 'Ваш вопрос был отправлен.'
        @question = Question.new
      end
     else

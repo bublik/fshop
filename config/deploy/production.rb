@@ -1,12 +1,12 @@
-role :app, %w{deploy@128.199.173.133}
-role :web, %w{deploy@128.199.173.133}
-role :db, %w{deploy@128.199.173.133}
+role :app, %w{deploy@prologic.com.ua}
+role :web, %w{deploy@prologic.com.ua}
+role :db, %w{deploy@prologic.com.ua}
 
 set :application, 'production'
 set :branch, 'master'
-set :deploy_to, "/var/www/fshop/#{fetch(:application)}"
+#set :deploy_to, "/var/www/fshop/#{fetch(:application)}"
 
-server '128.199.173.133',
+server 'prologic.com.ua',
        user: 'deploy',
        roles: %w{web app},
        ssh_options: {

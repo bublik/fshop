@@ -1,10 +1,11 @@
 source 'https://rubygems.org'
+ruby '2.2.0'
 
-gem 'rails', '4.1.4'
+gem 'rails', '4.2.0'
 # Use mysql as the database for Active Record
 gem 'mysql2'
 gem 'aasm'
-gem 'awesome_nested_set', '~> 3.0.0.rc.6'
+gem 'awesome_nested_set'
 gem 'sidekiq'
 gem 'sinatra', require: false
 gem 'slim'
@@ -21,7 +22,7 @@ gem 'less-rails-bootstrap', '~> 3.2.0'
 # Use Uglifier as compressor for JavaScript assets
 gem 'uglifier', '>= 1.3.0'
 # Use CoffeeScript for .js.coffee assets and views
-gem 'coffee-rails', '~> 4.0.0'
+gem 'coffee-rails' #, '~> 4.0.0'
 # See https://github.com/sstephenson/execjs#readme for more supported runtimes
 gem 'therubyracer', platforms: :ruby
 
@@ -51,9 +52,10 @@ group :development do
   gem 'html2haml'
   gem 'quiet_assets'
   gem 'capistrano', '~> 3.2.0'
+  gem 'capistrano-bundler'
   gem 'capistrano-rails'
   gem 'capistrano-sidekiq' , github: 'seuros/capistrano-sidekiq'
-  gem 'capistrano-rbenv', '~> 2.0'
+  gem 'capistrano-rvm', '~> 0.1', require: false
 end
 
 group :development, :test do

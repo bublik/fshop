@@ -72,7 +72,7 @@ class Product < ActiveRecord::Base
     #обозначили как удаленное и мы его больше не показываем нигде
     event :hide do
       transitions to: :deleted,
-                  on_transition: Proc.new { |obj, *args| IndexerWorker.perform_async(:delete, obj.id) if obj.aasm.from_state.eql?(:published) }
+                  after_transition: Proc.new { |obj, *args| IndexerWorker.perform_async(:delete, obj.id) if obj.aasm.from_state.eql?(:published) }
     end
 
     # подтвердили продукт как нормальный для показа и отправили в очерель для создания превью

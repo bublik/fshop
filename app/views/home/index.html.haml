@@ -20,8 +20,13 @@
 .social
   .row
     .col-sm-30.col-md-15.latest-blog-posts
-      %h2 Последние записи в блоге
+      %h2.styled Последние записи в блоге
       - @blogs.each do |blog|
         .port= link_to(blog.title, blog, title: blog.title)
     .col-sm-30.col-md-15
-      %h2 Присоединяйтесь к нам в соц сетях
+      %h2.styled Присоединяйтесь к нам в соц сетях
+.partners
+  %h2.styled Партнеры
+  %ul.list-inline
+    - @shops.decorate.each do |shop|
+      %li= shop.logo

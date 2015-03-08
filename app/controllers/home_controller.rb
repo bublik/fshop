@@ -1,6 +1,7 @@
 class HomeController < ApplicationController
 
   def index
+    @shops = Shop.page(params[:page]).per(5)
     @products = Product.last_records.map(&:decorate)
     @blogs = Blog.last_records
   end
@@ -19,10 +20,10 @@ class HomeController < ApplicationController
       question_params = params.require(:question).permit(:username, :email, :message)
       @question = Question.new(question_params)
       @question.feedback = true
-     if @question.valid? && Notifications.contact_us(@question).deliver
-       flash[:notice] = 'Ваш вопрос был отправлен.'
-       @question = Question.new
-     end
+      if @question.valid? && Notifications.contact_us(@question).deliver
+        flash[:notice] = 'Ваш вопрос был отправлен.'
+        @question = Question.new
+      end
     else
       @question = Question.new
     end
@@ -30,6 +31,5 @@ class HomeController < ApplicationController
   end
 
   def faq
-
   end
 end

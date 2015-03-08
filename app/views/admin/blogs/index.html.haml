@@ -1,7 +1,7 @@
-%h1 Listing posts
+%h1 Список заметок
 .text-right
   = paginate(@blogs)
-  = link_to 'Add New', new_admin_blog_path, class: 'btn btn-success'
+  = link_to 'Новая', new_admin_blog_path, class: 'btn btn-success'
 
 %section.blog.container
   %section.post-list

@@ -14,32 +14,21 @@ class Admin::BlogsController < AdminController
 
   def create
     @blog = Blog.new(blog_params)
-
-    respond_to do |format|
-      if @blog.save
-        format.html { redirect_to admin_blogs_path, notice: 'Post was successfully created.' }
-      else
-        format.html { render :new }
-      end
-    end
+    @blog.save ?
+      redirect_to(admin_blogs_path, notice: 'Post was successfully created.') :
+      render(:new)
   end
 
   def update
-    respond_to do |format|
-      if @blog.update(blog_params)
-        format.html { redirect_to admin_blogs_path, notice: 'Post was successfully updated.' }
-      else
-        format.html { render :edit }
-      end
-    end
+    @blog.update(blog_params) ?
+      redirect_to(admin_blogs_path, notice: 'Post was successfully updated.') :
+      render(:edit)
   end
 
   def destroy
-    @blog.destroy
-    respond_to do |format|
-      format.html { redirect_to admin_blogs_path, notice: 'Post was successfully destroyed.' }
-      format.js {}
-    end
+    @blog.destroy ?
+      redirect_to(admin_blogs_path, notice: 'Post was successfully destroyed.') :
+      redirect_to(:back)
   end
 
   private

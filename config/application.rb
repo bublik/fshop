@@ -8,7 +8,7 @@ Bundler.require(*Rails.groups)
 
 module Fshop
   class Application < Rails::Application
-
+    config.action_view.sanitized_allowed_tags = ['table', 'tr', 'td', 'p', 'div']
     config.assets.paths << Rails.root.join("app", "assets", "fonts", "twitter", "bootstrap")
     config.app_generators.stylesheet_engine :less
     config.less.paths << File.join(Rails.root, 'app', 'assets', 'stylesheets', 'custom_bootstrap')

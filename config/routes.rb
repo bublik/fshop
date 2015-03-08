@@ -34,8 +34,8 @@ Rails.application.routes.draw do
 
     resources :products, except: [:new, :show] do
       collection do
-        get 'verification'
-        get 'identification'
+        get '/verification(/:shop_id)' => 'products#verification', as: :verification
+        get '/identification(/:shop_id)' => 'products#identification', as: :identification
       end
     end
 

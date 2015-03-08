@@ -10,7 +10,7 @@ class ProductDecorator < Draper::Decorator
   end
 
   def shipping_info
-    _shop.shipping
+    h.simple_format(_shop.shipping)
   end
 
   def keywords

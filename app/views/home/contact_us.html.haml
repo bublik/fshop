@@ -1,4 +1,4 @@
-%h2 Contact Us
+%h2 Напишите нам
 %section.container
   .row
     .col-md-15
@@ -7,12 +7,12 @@
           .alert.alert-danger= @question.errors.full_messages.join(', ')
         .row
           .col-md-15
-            %label.sr-only Name
-            = f.input_field :username, label: false, placeholder: 'Your name'
+            %label.sr-only Имя
+            = f.input_field :username, label: false, placeholder: 'Ваше имя'
           .col-md-15
-            %label.sr-only Email aditem
-            = f.input_field :email, label: false, placeholder: 'Enter email'
+            %label.sr-only Емейл
+            = f.input_field :email, label: false, placeholder: 'Контактный емейл'
         .row
           .col-md-30
-            = f.text_area :message, label: false, placeholder: 'Ask are question', rows: '3', class: 'form-control'
-        = f.submit 'Send', class: 'btn btn-success'
+            = f.text_area :message, label: false, placeholder: 'Задайте вопрос', rows: '3', class: 'form-control'
+        = f.submit 'Отправить', class: 'btn btn-success'

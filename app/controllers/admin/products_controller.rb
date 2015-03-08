@@ -6,14 +6,19 @@ class Admin::ProductsController < AdminController
   end
 
   def verification
-    if params[:disable_ids]
-      Product.friendly.find(params[:disable_ids]).map(&:hide!)
-    end
-    @products = Product.draft.includes(:shop).page(params[:page]).per(5)
+    Product.friendly.find(params[:disable_ids]).map(&:hide!) if params[:disable_ids]
+
+    @products = Product.draft.includes(:shop)
+    @products = @products.where(shop_id: params[:shop_id]) if params[:shop_id]
+    @products = @products.page(params[:page]).per(5)
   end
 
   def identification
-    if @product = Product.identified.first
+    @product = Product.identified
+    @product = Product.identified.where(shop_id: params[:shop_id]) if params[:shop_id].present?
+    @product = @product.first
+
+    if @product
       @product = @product.decorate
       session[:back_path] = identification_admin_products_path
       render :edit
@@ -51,7 +56,7 @@ class Admin::ProductsController < AdminController
     @product.hide!
     respond_to do |format|
       format.html { redirect_to(request.referrer.to_s.match('identification') ? identification_admin_products_path : admin_products_path) }
-      format.js { }
+      format.js {}
     end
   end
 

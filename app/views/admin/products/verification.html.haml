@@ -1,5 +1,10 @@
 .new-items.item-list.verification
   .row
+    .col-xs-12
+      - Shop.all.each do |shop|
+        = link_to(shop.name, verification_admin_products_path(shop_id: shop.id), class: 'btn btn-primary')
+  %hr/
+  .row
     - @products.decorate.each do |product|
       .col-xs-15.col-sm-10.col-md-6
         = div_for product, class: 'pending', data: {id: product.id}, style: 'height: 300px' do
@@ -7,8 +12,8 @@
         .title
           %div= link_to(product.name, product.link)
           %em= product.shop
-        .description= product.description
+        .description= strip_tags product.description
         = link_to('read more', '#', class: 'more', data: {target: "#{dom_id(product.object)}"})
   .row.text-right
     = link_to('all', '#', remote: true, class: 'btn btn-info select_all')
-    = link_to('Next', verification_admin_products_path, remote: true, class: 'btn btn-success next')
+    = link_to('Next', verification_admin_products_path(shop_id: @products.first.shop_id), remote: true, class: 'btn btn-success next')

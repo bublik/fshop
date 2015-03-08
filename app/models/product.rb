@@ -28,6 +28,7 @@ class Product < ActiveRecord::Base
   extend FriendlyId
   include AASM
   include Searchable
+  include ActionView::Helpers::SanitizeHelper
   self.primary_key = 'sync_hash'
 
   mount_uploader :image, ImageUploader
@@ -134,7 +135,7 @@ class Product < ActiveRecord::Base
       shop_id: shop_id,
       sku: offer.id,
       name: offer.name || offer.model,
-      description: offer.description[0..1999],
+      description:  sanitize(CGI::unescape_html(offer.description))[0..1999],
       link: offer.url,
       original_image: offer.picture,
       currency: offer.currency.id, #.name.encode('iso-8859-1').encode('utf-8'),

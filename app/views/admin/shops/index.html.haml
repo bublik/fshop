@@ -20,7 +20,9 @@
       %td= shop.affiliate_network_id
       %td= shop.affiliate_network_merchant_id
       %td
-        = link_to 'Изменить', edit_admin_shop_path(shop)
-        = link_to 'Удалить', [:admin, shop], :method => :delete, :data => { :confirm => 'Are you sure?' }
+        = link_to 'Модерация', verification_admin_products_path(shop_id: shop.id), class: 'btn btn-info btn-xs'
+        = link_to 'Публикация', identification_admin_products_path(shop_id: shop.id), class: 'btn btn-info btn-xs'
+        = link_to 'Изменить', edit_admin_shop_path(shop), class: 'btn btn-warning btn-xs'
+        = link_to 'Удалить', [:admin, shop], :method => :delete, :data => { :confirm => 'Вы уверены' }, class: 'btn btn-danger btn-xs'
 
 = paginate @shops

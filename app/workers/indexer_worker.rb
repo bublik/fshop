@@ -5,7 +5,7 @@ class IndexerWorker
   # ElasticClient = Elasticsearch::Client.new host: 'localhost:9200', logger: Sidekiq.logger
 
   def perform(operation, record_id)
-    logger.debug [operation, "ID: #{record_id}"]
+    Rails.logger.debug [operation, "ID: #{record_id}"]
 
     case operation.to_s
       when /index/
@@ -17,5 +17,4 @@ class IndexerWorker
         raise ArgumentError, "Unknown operation '#{operation}'"
     end
   end
-
 end

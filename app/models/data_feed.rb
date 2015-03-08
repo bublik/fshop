@@ -27,12 +27,11 @@ class DataFeed < ActiveRecord::Base
     # https://github.com/ArtemPyanykh/goods
     begin
       catalog = Goods.from_url(self.url, 'utf-8')
-
       # catalog.currencies.each do |currency|
       #   puts "Currency #{currency.id} #{currency.rate}" # => "RUR"
       #   # => 1.00 or 30.00 or some other float
       # end
-      #
+
       # catalog.categories.each do |c|
       #   # category.id # => "some id"
       #   # category.name # => "some name"
@@ -54,9 +53,10 @@ class DataFeed < ActiveRecord::Base
         Product.create_from_offer(self.shop_id, offer)
       end
 
-
     rescue Goods::XML::InvalidFormatError => e
       puts e.message
     end
+    self.sync_date = Time.now
+    self.save
   end
 end

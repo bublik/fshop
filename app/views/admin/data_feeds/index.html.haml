@@ -5,14 +5,17 @@
 %table.table.table-hover
   %tr
     %th Url
+    %th Sync date
     %th Type
     %th Actions
 
   - @data_feeds.each do |data_feed|
     %tr
       %td= link_to(data_feed.url, data_feed.url)
+      %td= data_feed.sync_date && data_feed.sync_date.to_s(:short)
       %td= data_feed.feed_type
       %td
         .btn-group.btn-group-xs
+          = link_to 'Загрузка', start_sync_admin_shop_data_feed_path(data_feed.shop_id, data_feed), class: 'btn btn-primary'
           = link_to 'Edit', edit_admin_shop_data_feed_path(data_feed.shop_id, data_feed), class: 'btn btn-info'
-          = link_to 'Destroy', admin_shop_data_feed_path( data_feed.shop_id, data_feed), :method => :delete, :data => { :confirm => 'Are you sure?' }, class: 'btn btn-warning'
+          = link_to 'Destroy', admin_shop_data_feed_path( data_feed.shop_id, data_feed), :method => :delete, :data => { :confirm => 'Уверен?' }, class: 'btn btn-warning'

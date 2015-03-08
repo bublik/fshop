@@ -29,7 +29,11 @@ Rails.application.routes.draw do
     resources :blogs, except: [:show]
     resources :short_urls, except: [:show]
     resources :shops, except: [:show] do
-      resources :data_feeds, except: [:show]
+      resources :data_feeds, except: [:show] do
+        member do
+          get :start_sync
+        end
+      end
     end
 
     resources :products, except: [:new, :show] do

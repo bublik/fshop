@@ -13,6 +13,11 @@ class Admin::DataFeedsController < AdminController
   def edit
   end
 
+  def start_sync
+    LoaderWorker.perform_async(params[:id])
+    redirect_to({action: :index}, notice: 'Синхронизация отправлена в очередь.')
+  end
+
   def create
     @data_feed = DataFeed.new(data_feed_params)
 

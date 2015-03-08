@@ -24,9 +24,9 @@
       - @blogs.each do |blog|
         .port= link_to(blog.title, blog, title: blog.title)
     .col-sm-30.col-md-15
-      %h2.styled Присоединяйтесь к нам в соц сетях
+      -#%h2.styled Присоединяйтесь к нам в соц сетях
 .partners
   %h2.styled Партнеры
   %ul.list-inline
     - @shops.decorate.each do |shop|
-      %li= shop.logo
+      %li= link_to(shop.logo, shop.target_url, title: shop.name, rel: 'nofollow')

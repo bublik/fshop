@@ -13,7 +13,7 @@
   .row
     .col-xs-30.col-md-10
       = @product.image('img-responsive')
-      .fb-share-button{data: {href:"https://developers.facebook.com/docs/plugins/", layout: "button_count"}}
+      .fb-share-button{data: {href: request.url, layout: "button_count"}}
       %h4 Особенности
       - @product.cached_tags.except(:occasion).each do |tag_type, tags|
         .row.tags
@@ -22,7 +22,7 @@
             - tags.each do |name|
               = link_to(name, tag_products_path(tag_type: tag_type, tag_name: name), title: name, class: 'btn btn-default btn-xs')
 
-      .addthis_native_toolbox
+      -#.addthis_native_toolbox
     %section.col-xs-30.col-md-17
       %h1= @product.name
       .row
@@ -104,5 +104,5 @@
     fjs.parentNode.insertBefore(js, fjs);
     }(document, 'script', 'facebook-jssdk'));
 
-<!-- Go to www.addthis.com/dashboard to customize your tools -->
-<script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=bublik" async="async"></script>
+-#<!-- Go to www.addthis.com/dashboard to customize your tools -->
+-#<script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=bublik" async="async"></script>

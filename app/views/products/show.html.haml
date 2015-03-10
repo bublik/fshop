@@ -1,5 +1,13 @@
 - content_for(:page_title) do
   = @product.name
+- content_for(:meta_content) do
+  %meta{property: 'fb:app_id', content: Rails.application.secrets.fb_app_id}
+  %meta{property: 'og:locale', content: "ru_RU"}
+  %meta{property: 'og:url', content: request.url}
+  %meta{property: 'og:image', content: @product.object.image.preview.url}
+  %meta{property: 'og:title', content: @product.name}
+  %meta{property: 'og:site_name', content: Rails.application.secrets.site_name}
+  %meta{property: 'og:description', content: @product.description}
 
 %section.container.item-single
   .row
@@ -12,7 +20,7 @@
           .col-md-20
             - tags.each do |name|
               = link_to(name, tag_products_path(tag_type: tag_type, tag_name: name), title: name, class: 'btn btn-default btn-xs')
-
+      .fb-like{data: {share: 'true', width: '450', 'show-faces' => 'true'}}
     %section.col-xs-30.col-md-17
       %h1= @product.name
       .row

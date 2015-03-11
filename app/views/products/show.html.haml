@@ -9,6 +9,9 @@
   %meta{property: 'og:site_name', content: Rails.application.secrets.site_name}
   %meta{property: 'og:description', content: @product.description}
 
+- content_for(:description) do
+  = @product.description
+
 %section.container.item-single
   .row
     .col-xs-30.col-md-10

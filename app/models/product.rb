@@ -32,10 +32,10 @@ class Product < ActiveRecord::Base
   self.primary_key = 'sync_hash'
 
   mount_uploader :image, ImageUploader
-  acts_as_taggable_on :other_detail, :fabric, :colour, :textile, :item_type, :style, :length, :occasion, :pattern,
+  acts_as_taggable_on :other_detail, :fabric, :colour, :textile, :item_type, :style, :length, :size, :occasion, :pattern,
                       :collar_type, :body_type, :back, :sleeve_type,
                       :length_of_sleeve, :neckline_type, :waistline, :belt_type, :hemline, :item_shape, :skirt_type
-  VISIBLE_TAGS = [:length, :colour, :collar_type, :body_type, :sleeve_type, :length_of_sleeve, :fabric]
+  VISIBLE_TAGS = [:length, :size, :colour, :collar_type, :body_type, :sleeve_type, :length_of_sleeve]
 
   belongs_to :shop
   has_many :questions, -> { where('questions.state = ?', Question.states[:verified]) }
@@ -135,7 +135,7 @@ class Product < ActiveRecord::Base
       shop_id: shop_id,
       sku: offer.id,
       name: offer.name || offer.model,
-      description:  sanitize(CGI::unescape_html(offer.description))[0..1999],
+      description: sanitize(CGI::unescape_html(offer.description))[0..1999],
       link: offer.url,
       original_image: offer.picture,
       currency: offer.currency.id, #.name.encode('iso-8859-1').encode('utf-8'),

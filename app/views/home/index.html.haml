@@ -1,3 +1,7 @@
+- content_for :description  do
+  Агрегатор интернет магазинов одежды, Украина, Россия и СНГ. Женская одежда на все случаи жизни.
+- content_for :keywords do
+  Женская одежда, плятье, сарафан, пижама, костюм, шорты, подобрать.
 -#.row
   .col-xs-30
     %img.img-responsive{:src => "http://placehold.it/1200x300"}/
@@ -25,7 +29,7 @@
         .port= link_to(blog.title, blog, title: blog.title)
     .col-sm-30.col-md-15
       -#%h2.styled Присоединяйтесь к нам в соц сетях
-.partners
+    .partners
   %h2.styled Партнеры
   %ul.list-inline
     - @shops.decorate.each do |shop|

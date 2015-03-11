@@ -7,9 +7,9 @@
     %title= yield(:page_title).blank? ? Rails.application.secrets.site_name : yield(:page_title)
     %meta{name: 'description', content: yield(:description) }
     %meta{name: 'keywords', content: yield(:keywords) }
+    = yield(:meta_content)
     = stylesheet_link_tag    'application', media: 'all'
     = javascript_include_tag 'application'
-    = yield(:meta_content)
     = csrf_meta_tags
     /[if lt IE 9]
       <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
@@ -21,3 +21,5 @@
       = render 'layouts/flash'
       = yield
     = render 'layouts/footer'
+    - if Rails.env.production?
+      = render 'layouts/google_analytix'

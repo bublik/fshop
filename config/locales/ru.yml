@@ -275,7 +275,6 @@ ru:
   back: Возврат
   sleeve_type: Тип рукава
   length_of_sleeve: Длина рукава
-  neckline_type: Тип шеи
   waistline: Талия
   belt_type: Тип ремня
   hemline: Подол
@@ -286,6 +285,8 @@ ru:
   other_detail: Другое
   fabric: Производитель
   textile: Ткань
+  neckline_type: Декольте
+  size: Размер
   views:
     pagination:
       first: Первая

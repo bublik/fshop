@@ -33,9 +33,9 @@ class Product < ActiveRecord::Base
 
   mount_uploader :image, ImageUploader
   acts_as_taggable_on :other_detail, :occasion, :size, :length, :colour, :textile, :item_type, :style,
-                      :body_type, :sleeve_type, :length_of_sleeve, :neckline_type, :waistline, :belt_type,
+                      :body_type, :length_of_sleeve, :neckline_type, :waistline, :belt_type,
                       :item_shape, :skirt_type, :back #:hemline, item_shape, :collar_type, :pattern
-  VISIBLE_TAGS = [:length, :size, :colour, :collar_type, :body_type, :sleeve_type, :length_of_sleeve].freeze
+  VISIBLE_TAGS = [:occasion, :length, :size, :colour, :collar_type, :body_type, :length_of_sleeve].freeze
 
   belongs_to :shop
   has_many :questions, -> { where('questions.state = ?', Question.states[:verified]) }

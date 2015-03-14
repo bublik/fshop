@@ -16,9 +16,11 @@
 //= require underscore
 //= require backbone
 //= require search
+/*
 //= stub ckeditor/init
 //= stub ckeditor/config
 //= stub ckeditor/lang/ru
 //= stub ckeditor/lang/en
-
+*/
+//= require ckeditor/init
 //= require_tree .

@@ -6,29 +6,32 @@
       .form-group
         .col-sm-6
           %label Shop
-        .col-sm-18
+        .col-sm-10
           = @product.shop
-      .form-group
         .col-sm-6
           %label Brand
-        .col-sm-18= @product.brand
+        .col-sm-10= @product.brand
       = f.input :name
-      = f.input :description, as: :text
+      = f.input :description, as: :text, input_html: {rows: 5}
       .form-group
         .col-sm-6
           %label Original price
-        .col-sm-18= @product.original_price
-      .form-group
+        .col-sm-6= @product.original_price
+
         .col-sm-6
           %label Price
-        .col-sm-18= @product.price
+        .col-sm-6= @product.price
       .form-group
         .col-sm-6
           %label Keywords
         .col-sm-18
           = @product.keywords
-  .row
+  -#.row
     = render partial: 'admin/products/tags_select_list', collection: tag_types, as: :tag_type, locals:{ product: @product }
-
-  %br
-  = f.submit 'Save', class: 'btn btn-success pull-right'
+  %div{role: 'tabpanel'}
+    %ul.nav.nav-tabs{role: 'tablist'}
+      - tag_types.each do |tag_type|
+        %li{role: 'presentation'}= link_to(t(tag_type), "##{tag_type}",  aria:{controls:'home'}, role: 'tag',  data:{toggle:'tab'})
+    .tab-content
+      = render partial: 'admin/products/tags_select_list', collection: tag_types, as: :tag_type, locals:{ product: @product }
+  %p.text-center= f.submit 'Save', class: 'btn btn-success'

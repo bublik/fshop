@@ -5,6 +5,6 @@
         = link_to(shop.name, identification_admin_products_path(shop_id: shop.id), class: 'btn btn-primary')
 %h1 Редактирование ##{@product.to_param}
 .pull-right
-  = link_to('Открыть товар', @product.link, class: 'btn btn-info')
+  = link_to('Открыть товар', @product.link, class: 'btn btn-info', target: 'blank')
   = link_to 'Удалить', admin_product_path(@product), :method => :delete, :data => { :confirm => 'Вы уверены?'}, class: 'btn btn-warning'
 = render 'form'

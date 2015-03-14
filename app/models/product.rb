@@ -145,7 +145,7 @@ class Product < ActiveRecord::Base
       keywords: offer.category.name
     }
     unless product.save
-      puts product.errors.full_messages.inspect
+      logger.error(product.errors.full_messages.inspect)
     end
     product
   end

@@ -32,7 +32,7 @@ class Product < ActiveRecord::Base
   self.primary_key = 'sync_hash'
 
   mount_uploader :image, ImageUploader
-  acts_as_taggable_on :other_detail, :fabric, :colour, :textile, :item_type, :style, :length, :size, :occasion, :pattern,
+  acts_as_taggable_on :other_detail, :colour, :textile, :item_type, :style, :length, :size, :occasion, :pattern,
                       :collar_type, :body_type, :back, :sleeve_type,
                       :length_of_sleeve, :neckline_type, :waistline, :belt_type, :hemline, :item_shape, :skirt_type
   VISIBLE_TAGS = [:length, :size, :colour, :collar_type, :body_type, :sleeve_type, :length_of_sleeve]

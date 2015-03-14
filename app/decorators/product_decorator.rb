@@ -18,7 +18,7 @@ class ProductDecorator < Draper::Decorator
   end
 
   def image(style_class = '')
-    h.image_tag(object.image.url, class: style_class)
+    h.image_tag(object.image.url, class: style_class, title: object.name)
   end
 
   def image_responsive
@@ -26,11 +26,11 @@ class ProductDecorator < Draper::Decorator
   end
 
   def preview_image
-    h.image_tag(object.image.preview.url)
+    h.image_tag(object.image.preview.url, title: object.name)
   end
 
   def thumb_image
-    h.image_tag(object.image.thumb.url)
+    h.image_tag(object.image.thumb.url, title: object.name)
   end
 
   def description

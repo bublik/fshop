@@ -6,7 +6,7 @@ role :db, %w{deploy@prologic.com.ua}
 # set :branch, 'develop'
 
 set :rails_env, 'production'
-set :application, 'production'
+set :application, 'staging'
 set :branch, 'develop'
 
 #set :deploy_to, "/var/www/fshop/#{fetch(:application)}"

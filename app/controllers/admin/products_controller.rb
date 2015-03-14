@@ -15,7 +15,7 @@ class Admin::ProductsController < AdminController
 
   def identification
     @product = Product.identified
-    @product = Product.identified.where(shop_id: params[:shop_id]) if params[:shop_id].present?
+    @product = @product.where(shop_id: params[:shop_id]) if params[:shop_id].present?
     @product = @product.first
 
     if @product

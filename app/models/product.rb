@@ -32,10 +32,10 @@ class Product < ActiveRecord::Base
   self.primary_key = 'sync_hash'
 
   mount_uploader :image, ImageUploader
-  acts_as_taggable_on :other_detail, :colour, :textile, :item_type, :style, :length, :size, :occasion, :pattern,
-                      :collar_type, :body_type, :back, :sleeve_type,
-                      :length_of_sleeve, :neckline_type, :waistline, :belt_type, :hemline, :item_shape, :skirt_type
-  VISIBLE_TAGS = [:length, :size, :colour, :collar_type, :body_type, :sleeve_type, :length_of_sleeve]
+  acts_as_taggable_on :other_detail, :occasion, :size, :length, :colour, :textile, :item_type, :style,
+                      :body_type, :sleeve_type, :length_of_sleeve, :neckline_type, :waistline, :belt_type,
+                      :item_shape, :skirt_type, :back #:hemline, item_shape, :collar_type, :pattern
+  VISIBLE_TAGS = [:length, :size, :colour, :collar_type, :body_type, :sleeve_type, :length_of_sleeve].freeze
 
   belongs_to :shop
   has_many :questions, -> { where('questions.state = ?', Question.states[:verified]) }
@@ -124,26 +124,32 @@ class Product < ActiveRecord::Base
   end
 
   def related_products
-    Product.related_products(self).where(is_active: true).where.not(sync_hash: self.id).limit(5)
+    Product.related_products(self).where(is_active: true).where.not(sync_hash: self.id).limit(4)
   end
 
   def self.create_from_offer(shop_id, offer)
-    #  image          :string(255)
-    #  gender         :string(20)
     product = find_or_initialize_by(sync_hash: Digest::SHA256.hexdigest("#{shop_id}-#{offer.id}")[0..35])
-    product.attributes = {
-      shop_id: shop_id,
-      sku: offer.id,
-      name: offer.name || offer.model,
-      description: sanitize(CGI::unescape_html(offer.description))[0..1999],
-      link: offer.url,
-      original_image: offer.picture,
-      currency: offer.currency.id, #.name.encode('iso-8859-1').encode('utf-8'),
-      price: offer.price,
-      original_price: offer.price,
-      brand: offer.vendor,
-      keywords: offer.category.name
-    }
+    if product.new_record?
+      product.attributes = {
+        shop_id: shop_id,
+        sku: offer.id,
+        name: offer.name || offer.model,
+        description: sanitize(CGI::unescape_html(offer.description))[0..1999],
+        link: offer.url,
+        original_image: offer.picture,
+        currency: offer.currency.id, #.name.encode('iso-8859-1').encode('utf-8'),
+        price: offer.price,
+        original_price: offer.price,
+        brand: offer.vendor,
+        keywords: offer.category.name
+      }
+    else
+      product.attributes = {
+        price: offer.price,
+        currency: offer.currency.id,
+        name: offer.name || offer.model
+      }
+    end
     unless product.save
       logger.error(product.errors.full_messages.inspect)
     end

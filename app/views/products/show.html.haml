@@ -4,7 +4,7 @@
   %meta{property: 'fb:app_id', content: Rails.application.secrets.fb_app_id}
   %meta{property: 'og:locale', content: "ru_RU"}
   %meta{property: 'og:url', content: request.url}
-  %meta{property: 'og:image', content: "//#{request.host}#{@product.object.image.preview.url}"}
+  %meta{property: 'og:image', content: "http://#{request.host}#{@product.object.image.preview.url}"}
   %meta{property: 'og:title', content: @product.name}
   %meta{property: 'og:site_name', content: Rails.application.secrets.site_name}
   %meta{property: 'og:description', content: @product.description}

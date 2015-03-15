@@ -130,6 +130,10 @@ class Product < ActiveRecord::Base
   def self.create_from_offer(shop_id, offer)
     product = find_or_initialize_by(sync_hash: Digest::SHA256.hexdigest("#{shop_id}-#{offer.id}")[0..35])
     if product.new_record?
+      keywords = []
+      keywords << offer.category.name
+      keywords << offer.category.parent.name if offer.category.parent
+
       product.attributes = {
         shop_id: shop_id,
         sku: offer.id,
@@ -141,13 +145,13 @@ class Product < ActiveRecord::Base
         price: offer.price,
         original_price: offer.price,
         brand: offer.vendor,
-        keywords: offer.category.name
+        keywords: keywords.join(', '),
       }
     else
       product.attributes = {
         price: offer.price,
         currency: offer.currency.id,
-        name: offer.name || offer.model
+        is_active: offer.available
       }
     end
     unless product.save

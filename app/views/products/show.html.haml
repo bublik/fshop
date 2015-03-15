@@ -30,6 +30,8 @@
       %h1= @product.name
       .row
         .col-md-20
+          - if session[:admin]
+            = link_to('admin edit', edit_admin_product_path(@product), class: 'btn btn-xs btn-info')
           %dl
             - unless @product.brand.blank?
               %dt Торговые марки

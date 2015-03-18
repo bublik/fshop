@@ -24,7 +24,9 @@
           .col-md-20
             - tags.each do |name|
               = link_to(name, tag_products_path(tag_type: tag_type, tag_name: name), title: name, class: 'btn btn-default btn-xs')
-
+      .addthis_sharing_toolbox
+      -#%h4 Коментарии
+      -#<div class="fb-comments" data-href="http://fashiondress.club/products/3603-angel-2244" data-numposts="5" data-width="380" data-colorscheme="light"></div>
     %section.col-xs-30.col-md-17
       %h1= @product.name
       .row
@@ -49,7 +51,6 @@
             Купить
             %i.glyphicon.glyphicon-share-alt
       = @product.description
-      .addthis_native_toolbox
       %section
         %header
           %h4 О магазине
@@ -74,7 +75,7 @@
             .col-xs-30.show-more
               %span Показать больше купонов
       %section.item-faq
-        %header
+        -#%header
           %h4 Вопросы и ответы
         %dl
           - @product.questions.decorate.each do |question|

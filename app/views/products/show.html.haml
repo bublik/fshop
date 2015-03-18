@@ -49,7 +49,7 @@
           %a.btn.btn-primary.form-control.btn-lg{:href => go_path(url: @product.link, shop_id: @product.shop_id), :rel => 'nofollow'}
             Купить
             %i.glyphicon.glyphicon-share-alt
-      %p.description= @product.description
+      = @product.description
       %section
         %header
           %h4 О магазине

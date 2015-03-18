@@ -34,7 +34,7 @@ class ProductDecorator < Draper::Decorator
   end
 
   def description
-    h.simple_format(object.description, wrapper_tag: 'description')
+    h.simple_format(object.description, class: 'description')
   end
 
   def price

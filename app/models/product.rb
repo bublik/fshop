@@ -124,7 +124,7 @@ class Product < ActiveRecord::Base
   end
 
   def related_products
-    Product.related_products(self).where(is_active: true).where.not(sync_hash: self.id).limit(4)
+    Product.related_products(self).where(is_active: true).where.not(sync_hash: self.id).limit(4) rescue []
   end
 
   def self.create_from_offer(shop_id, offer)

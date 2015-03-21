@@ -3,10 +3,10 @@
 # Table name: blogs
 #
 #  id         :integer          not null, primary key
-#  title      :string(255)
+#  title      :string
 #  preview    :text
 #  body       :text
-#  slug       :string(255)
+#  slug       :string
 #  created_at :datetime
 #  updated_at :datetime
 #

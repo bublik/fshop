@@ -15,11 +15,12 @@
   .row
     %aside#searchfilter.col-sm-30.col-md-6
       = form_tag '/products/search', id: 'filter_form', remote: true, method: :get do
+        = check_box_tag :type, params[:type], 'checked', class: 'hidden skip'
         - if params[:q].present?
           = check_box_tag :q, params[:q], params[:q].blank? ? false : 'checked', class: 'hidden'
         %ul#accordion.filters
-          - tag_types.each do |tag_type|
-            %li{ class: Product::VISIBLE_TAGS.include?(tag_type) ? nil : 'hidden'}
+          - @product_class.tag_types.each do |tag_type|
+            %li{ class: @product_class::VISIBLE_TAGS.include?(tag_type) ? nil : 'hidden'}
               %section.accordion
                 %header.accordion-header
                   %a{href: "##{tag_type}", data: {toggle: 'collapse', parent: '#accordion'}}= t(tag_type)
@@ -43,8 +44,8 @@
     #selected_tags.col-sm-120.col-md-24
       - if defined?(@page)
         %h3= @page.title
-      != selected_tag_link
+      != selected_tag_link(params[:type])
     #products
-      = render(@products)
+      = render(collection: @products, partial: '/products/product')
   .text-center
     = paginate(@products, remote: true)

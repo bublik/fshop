@@ -1,7 +1,7 @@
 module ApplicationHelper
 
-  def tag_types
-    Product.tag_types
+  def tag_types(product)
+    product.tag_types
   end
 
 end

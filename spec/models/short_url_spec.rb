@@ -3,13 +3,13 @@
 # Table name: short_urls
 #
 #  id          :integer          not null, primary key
-#  seo_url     :string(255)
+#  seo_url     :string
 #  full_url    :string(1024)
-#  title       :string(255)
-#  description :string(255)
-#  keywords    :string(255)
+#  title       :string
+#  description :string
+#  keywords    :string
 #  style_typs  :text
-#  filter      :string(255)
+#  filter      :string
 #  created_at  :datetime
 #  updated_at  :datetime
 #

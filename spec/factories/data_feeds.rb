@@ -4,10 +4,12 @@
 #
 #  id         :integer          not null, primary key
 #  shop_id    :integer
-#  url        :string(255)
-#  feed_type  :integer          default(0)
+#  url        :string
+#  feed_type  :integer          default("0")
 #  created_at :datetime
 #  updated_at :datetime
+#  sync_date  :datetime
+#  category   :string           default("одежда"), not null
 #
 
 # Read about factories at https://github.com/thoughtbot/factory_girl

@@ -5,9 +5,12 @@ Rails.application.routes.draw do
 
   resources :products, only: [:index, :show] do
     collection do
+      get :linen, action: :index, type: 'Linen'
+      get :clothing, action: :index, type: 'Clothing'
       get :search, as: :search
-      get 'tag/:tag_name(/:tag_type)', :action => :search, as: :tag
+      get 'tag/:type/:tag_name(/:tag_type)', :action => :search, as: :tag
     end
+
   end
 
   get 'about' => 'home#about', as: :about

@@ -276,7 +276,7 @@ ru:
   sleeve_type: Тип рукава
   length_of_sleeve: Длина рукава
   waistline: Талия
-  belt_type: Тип ремня
+  belt_type: Тип пояса
   hemline: Подол
   item_shape: Форма
   skirt_type: Тип юбки
@@ -287,6 +287,33 @@ ru:
   textile: Ткань
   neckline_type: Декольте
   size: Размер
+  subcategory: Категория
+
+  clothing_category: Категория
+  clothing_size: Размер
+  clothing_occasion: Повод
+  clothing_length: Длинна
+  clothing_colour: Цвет
+  clothing_textile: Ткань
+  clothing_item_type: Тип
+  clothing_style: Стиль
+  clothing_item_shape: Форма
+  clothing_skirt_type: Тип юбки
+  clothing_body_type: Объем
+  clothing_length_of_sleeve: Длина рукава
+  clothing_neckline_type: Декольте
+  clothing_waistline: Талия
+  clothing_belt_type: Тип пояса
+                      
+  linen_category: Категория
+  linen_size: Размер
+  linen_occasion: Повод
+  linen_length: Длинна
+  linen_colour: Цвет
+  linen_textile: Ткань
+  linen_item_type: Тип
+  linen_style: Стиль
+
   views:
     pagination:
       first: Первая

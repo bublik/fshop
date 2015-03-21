@@ -16,4 +16,5 @@
         = link_to('read more', '#', class: 'more', data: {target: "#{dom_id(product.object)}"})
   .row.text-right
     = link_to('all', '#', remote: true, class: 'btn btn-info select_all')
-    = link_to('Next', verification_admin_products_path(shop_id: @products.first.shop_id), remote: true, class: 'btn btn-success next')
+    - unless @products.blank?
+      = link_to('Next', verification_admin_products_path(shop_id: @products.first.shop_id), remote: true, class: 'btn btn-success next')

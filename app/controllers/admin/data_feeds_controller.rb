@@ -58,6 +58,6 @@ class Admin::DataFeedsController < AdminController
   end
 
   def data_feed_params
-    params.require(:data_feed).permit(:shop_id, :url, :feed_type)
+    params.require(:data_feed).permit(:shop_id, :url, :feed_type, :category)
   end
 end

@@ -2,25 +2,25 @@
 #
 # Table name: products
 #
-#  sync_hash      :string(36)       not null, primary key
+#  sync_hash      :string(100)      not null, primary key
 #  shop_id        :integer
 #  sku            :string(100)
-#  slug           :string(255)
-#  name           :string(255)
+#  slug           :string
+#  name           :string
 #  description    :string(2000)
 #  link           :string(512)
 #  brand          :string(100)
 #  keywords       :string(500)
 #  currency       :string(3)
 #  original_image :string(512)
-#  image          :string(255)
+#  image          :string
 #  original_price :integer
 #  price          :integer
 #  gender         :string(20)
-#  state          :integer          default(0)
+#  state          :integer          default("0")
 #  created_at     :datetime
 #  updated_at     :datetime
-#  is_active      :boolean          default(TRUE)
+#  is_active      :boolean          default("true")
 #  cached_tags    :text
 #
 

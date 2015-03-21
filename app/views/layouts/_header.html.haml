@@ -11,10 +11,10 @@
               = link_to_unless_current('Новые', products_path) do
                 %a{href: '#', class: 'active'} Новые
             %li
-              = link_to_unless_current('Одежда', '/clothing') do
+              = link_to_unless_current('Одежда', '/products/clothing') do
                 %a{href: '#', class: 'active'} Одежда
             %li
-              = link_to_unless_current('Белье', '/linen') do
+              = link_to_unless_current('Белье', '/products/linen') do
                 %a{href: '#', class: 'active'} Белье
             -#%li
             -#  = link_to_unless_current('Новые', products_path) do

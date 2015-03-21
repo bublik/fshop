@@ -1,8 +1,11 @@
 class ProductsController < ApplicationController
   layout 'application'
+  before_action :set_class, only: [:index, :search]
 
   def index
-    @products = Product.opened.page(params[:page]).per(30)
+    @products = Product.opened.where(type: params[:type]).page(params[:page]).per(30)
+
+
     respond_to do |format|
       format.html
       format.js
@@ -11,9 +14,9 @@ class ProductsController < ApplicationController
 
   def short
     if @page = ShortUrl.where(seo_url: params[:seo_url]).first
-     @products = Product.search(@page.filter.dup).page(params[:page]).records
-     @selected_tags = @page.filter.except('price').values.flatten
-     render :index
+      @products = Product.search(@page.filter.dup).page(params[:page]).records
+      @selected_tags = @page.filter.except('price').values.flatten
+      render :index
     else
       render file: 'home/page_404', status: 404
     end
@@ -21,7 +24,7 @@ class ProductsController < ApplicationController
 
   def search
     @products = if params[:tag_name].present?
-      Product.tagged_with(params[:tag_name]).page(params[:page]).per(30)
+      Product.where(type: params[:type]).tagged_with(params[:tag_name]).page(params[:page]).per(30)
     else
       condition = ''
       if params[:q]
@@ -35,7 +38,7 @@ class ProductsController < ApplicationController
         condition = params[:product]
         condition[:q] = params[:q] if params[:q]
       end
-      Product.search(condition.blank? ? '*' : condition).page(params[:page]).records
+      params[:type].constantize.search(condition.blank? ? '*' : condition).page(params[:page]).records
     end
 
     render :index
@@ -63,6 +66,11 @@ class ProductsController < ApplicationController
       return
     end
     render layout: 'simple'
+  end
+
+  private
+  def set_class
+    @product_class = params[:type].constantize
   end
 end
 

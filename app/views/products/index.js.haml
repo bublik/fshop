@@ -1,8 +1,8 @@
 - if params[:page].present?
-  $('#products').append("#{j render(@products) }").hide().fadeIn(1000);
+  $('#products').append("#{j render(collection: @products, partial: '/products/product') }").hide().fadeIn(1000);
   - if @products.next_page
-    $('.pagination').html("#{j paginate(@products)}");
+    $('.pagination').html("#{j paginate(collection: @products, partial: '/products/product')}");
   - else
     $('.pagination').remove();
 - else
-  $('#products').html("#{j render(@products) }").hide().fadeIn(1000);
+  $('#products').html("#{j render(collection: @products, partial: '/products/product') }").hide().fadeIn(1000);

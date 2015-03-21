@@ -161,7 +161,8 @@ CREATE TABLE data_feeds (
     feed_type integer DEFAULT 0,
     created_at timestamp without time zone,
     updated_at timestamp without time zone,
-    sync_date timestamp without time zone
+    sync_date timestamp without time zone,
+    category character varying DEFAULT 'одежда'::character varying NOT NULL
 );
 
 
@@ -208,7 +209,8 @@ CREATE TABLE products (
     created_at timestamp without time zone,
     updated_at timestamp without time zone,
     is_active boolean DEFAULT true,
-    cached_tags text
+    cached_tags text,
+    type character varying(15)
 );
 
 
@@ -273,7 +275,8 @@ CREATE TABLE shops (
     updated_at timestamp without time zone,
     logo character varying,
     data_feeds_count integer DEFAULT 0,
-    target_url character varying(500)
+    target_url character varying(500),
+    contact_email character varying
 );
 
 
@@ -708,4 +711,10 @@ INSERT INTO schema_migrations (version) VALUES ('20140724043801');
 INSERT INTO schema_migrations (version) VALUES ('20140728051349');
 
 INSERT INTO schema_migrations (version) VALUES ('20150308180605');
+
+INSERT INTO schema_migrations (version) VALUES ('20150319064446');
+
+INSERT INTO schema_migrations (version) VALUES ('20150319064651');
+
+INSERT INTO schema_migrations (version) VALUES ('20150321091450');
 

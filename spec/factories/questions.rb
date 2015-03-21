@@ -4,10 +4,10 @@
 #
 #  id         :integer          not null, primary key
 #  product_id :text
-#  username   :string(255)
-#  email      :string(255)
+#  username   :string
+#  email      :string
 #  message    :text
-#  state      :integer          default(0)
+#  state      :integer          default("0")
 #  parent_id  :integer
 #  lft        :integer
 #  rgt        :integer

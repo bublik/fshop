@@ -6,6 +6,7 @@
   %tr
     %th Url
     %th Sync date
+    %th Category
     %th Type
     %th Actions
 
@@ -13,6 +14,7 @@
     %tr
       %td= link_to(data_feed.url, data_feed.url)
       %td= data_feed.sync_date && data_feed.sync_date.to_s(:short)
+      %td= data_feed.category
       %td= data_feed.feed_type
       %td
         .btn-group.btn-group-xs

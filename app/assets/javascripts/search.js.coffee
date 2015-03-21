@@ -17,7 +17,7 @@ $ ->
     search: (e)->
       selected = []
       $('#selected_tags').html('')
-      _.each @$('input').filter(':checked'), (checkbox)->
+      _.each @$('input').not('#type').filter(':checked'), (checkbox)->
         _tag = $(checkbox).val()
         $('#selected_tags').append("<a href='/products/tag/" + _tag + "' class='selected_tag btn btn-default btn-xs'>" + _tag + "</a> ")
       @go()

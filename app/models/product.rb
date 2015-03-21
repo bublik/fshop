@@ -2,54 +2,53 @@
 #
 # Table name: products
 #
-#  sync_hash      :string(36)       not null, primary key
+#  sync_hash      :string(100)      not null, primary key
 #  shop_id        :integer
 #  sku            :string(100)
-#  slug           :string(255)
-#  name           :string(255)
+#  slug           :string
+#  name           :string
 #  description    :string(2000)
 #  link           :string(512)
 #  brand          :string(100)
 #  keywords       :string(500)
 #  currency       :string(3)
 #  original_image :string(512)
-#  image          :string(255)
+#  image          :string
 #  original_price :integer
 #  price          :integer
 #  gender         :string(20)
-#  state          :integer          default(0)
+#  state          :integer          default("0")
 #  created_at     :datetime
 #  updated_at     :datetime
-#  is_active      :boolean          default(TRUE)
+#  is_active      :boolean          default("true")
 #  cached_tags    :text
 #
 
 class Product < ActiveRecord::Base
   extend FriendlyId
   include AASM
-  include Searchable
   include ActionView::Helpers::SanitizeHelper
   self.primary_key = 'sync_hash'
 
   mount_uploader :image, ImageUploader
-  acts_as_taggable_on :other_detail, :occasion, :size, :length, :colour, :textile, :item_type, :style,
-                      :body_type, :length_of_sleeve, :neckline_type, :waistline, :belt_type,
-                      :item_shape, :skirt_type, :back #:hemline, item_shape, :collar_type, :pattern
-  VISIBLE_TAGS = [:occasion, :length, :size, :colour, :collar_type, :body_type, :length_of_sleeve, :other_detail].freeze
+  acts_as_taggable_on
 
   belongs_to :shop
   has_many :questions, -> { where('questions.state = ?', Question.states[:verified]) }
 
   enum state: {draft: 0, deleted: 1, verified: 2, identified: 3, published: 4}
   serialize :cached_tags, Hash
-
   validates_presence_of :sku, :name, :original_image, :link, :currency, :original_price, :price
+  before_save :store_tags, on: :udate
 
   scope :newest, -> { order('products.updated_at DESC') }
   scope :active, -> { where(is_active: true) }
   scope :opened, -> { published.active.newest }
+  scope :linen, -> { where(type: 'Linen') }
+  scope :clothing, -> { where(type: 'Clothing') }
 
-  before_save :store_tags, on: :udate
+  friendly_id :slug_candidates, use: :slugged
+
   after_commit do
     if self.published?
       self.flush_cashed_context_tags
@@ -57,8 +56,6 @@ class Product < ActiveRecord::Base
       IndexerWorker.perform_async(:index, self.id)
     end
   end
-
-  friendly_id :slug_candidates, use: :slugged
 
   def slug_candidates
     [self.name, self.shop.name, self.sku].join(' ')
@@ -84,7 +81,7 @@ class Product < ActiveRecord::Base
 
     # переход когда созданы превью для продукта
     event :identify do
-      transitions from: :verified, to: :identified
+      transitions from: [:verified, :draft], to: :identified
     end
 
     # после редактирования админом продукт становится доступный в публичной части
@@ -106,13 +103,13 @@ class Product < ActiveRecord::Base
   def as_indexed_json(options={})
     self.as_json({only: [:id, :sku, :slug, :name, :description, :brand, :keywords, :price, :gender, :currency, :cached_tags, :is_active, :state],
                   include: {shop: {only: :name}},
-                  methods: Product.tag_types.collect { |type| "#{type}_list" }
+                  methods: tag_types.collect { |type| "#{type}_list" }
                  })
   end
 
   def tags
     tags_hash = {}
-    Product.tag_types.each do |tags_type|
+    self.class.tag_types.each do |tags_type|
       tags = send("#{tags_type}_list".to_sym)
       tags_hash[tags_type] = tags unless tags.empty?
     end
@@ -124,7 +121,7 @@ class Product < ActiveRecord::Base
   end
 
   def related_products
-    Product.related_products(self).where(is_active: true).where.not(sync_hash: self.id).limit(4) rescue []
+    self.class.related_products(self).where(is_active: true).where.not(sync_hash: self.id).limit(4) rescue self.class.newest.limit(5)
   end
 
   def self.create_from_offer(shop_id, offer)
@@ -146,7 +143,9 @@ class Product < ActiveRecord::Base
         original_price: offer.price,
         brand: offer.vendor,
         keywords: keywords.join(', '),
+
       }
+      product.send("#{model_name.singular}_category_list=", offer.category.name)
     else
       product.attributes = {
         price: offer.price,
@@ -154,46 +153,54 @@ class Product < ActiveRecord::Base
         is_active: offer.available
       }
     end
+
     unless product.save
       logger.error(product.errors.full_messages.inspect)
     end
     product
   end
 
+  def self.types
+    ['Linen', 'Clothing']
+    # @product_types ||= Product.pluck(:type).compact.uniq
+    # @product_types = ['Linen', 'Clothing'] if @product_types.blank?
+    # @product_types
+  end
 
   def self.create_thumb(id)
-    product = Product.find(id)
+    product = find(id)
     product.remote_image_url = product.original_image
     product.save && product.identify! # : product.hide!
   end
 
   def self.last_records(limit = 10)
-    Rails.cache.fetch("product_last_records_#{limit}", expires_in: 5.minutes) do
+    Rails.cache.fetch("#{model_name.singular}_last_records_#{limit}", expires_in: 5.minutes) do
       self.opened.limit(limit).to_a
     end
   end
 
   def self.cashed_context_tags(context)
     #кешируем список контекстных тегов
-    Rails.cache.fetch("cashed_tags_#{context}", expires_in: 5.minutes) do
-      ActsAsTaggableOn::Tagging.where(context: context)
-        .joins(:tag)
-        .select('DISTINCT tags.name').map(&:name)
+    Rails.cache.fetch("#{model_name.singular}_cashed_tags_#{context}", expires_in: 5.minutes) do
+      ActsAsTaggableOn::Tagging.where(context: context).joins(:tag).select('DISTINCT tags.name').map(&:name)
     end
   end
 
   def self.flush_cache
-    Rails.cache.delete_matched(/^product_/)
+    Rails.cache.delete_matched(/^#{model_name.singular}/)
   end
 
   def cashed_context_tags(context)
-    Product.cashed_context_tags(context)
+    self.class.cashed_context_tags(context)
   end
 
   def flush_cashed_context_tags
-    Product.tag_types.each do |context|
-      Rails.cache.delete("cashed_tags_#{context}")
+    self.class.tag_types.each do |context|
+      Rails.cache.delete("#{model_name.singular}_cashed_tags_#{context}")
     end
   end
 
+  def tag_types
+    self.class.tag_types
+  end
 end

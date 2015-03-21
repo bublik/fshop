@@ -46,7 +46,7 @@ class ProductDecorator < Draper::Decorator
   end
 
   def admin_tags_list
-    tag_type_rows = h.tag_types.collect do |tag_type|
+    tag_type_rows = h.tag_types(object).collect do |tag_type|
       tags = object.tags_on(tag_type).map(&:name)
       tags.blank? ? nil :
         "#{I18n.t(tag_type)}: " + tags.collect { |tag| h.content_tag(:span, tag, class: 'label label-default') }.join(' ')

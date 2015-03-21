@@ -6,84 +6,30 @@ module Searchable
     include Elasticsearch::Model::Callbacks
 
     paginates_per 30
-    index_name "products-#{Rails.env}" # how to remove index curl -XDELETE 'http://localhost:9200/products-development/'
-    document_type "product"
-
+    index_name "#{model_name.singular}-#{Rails.env}".downcase # how to remove index curl -XDELETE 'http://localhost:9200/products-development/'
+    document_type model_name.singular
+    inherited_class = self
     settings index: {number_of_shards: 5,
-                     analysis: {
-                       analyzer: {
-                         analyzer_startswith: {
-                           tokenizer: "keyword",
-                           filter: "lowercase"
-                         }
-                       }
-                     }} do
+                     analysis: {analyzer: {analyzer_startswith: {tokenizer: 'keyword', filter: 'lowercase'}}}} do
       mapping do
         indexes :price, type: 'integer'
-        indexes :colour_list, type: 'multi_field' do
-          indexes :colour_list, analyzer: 'keyword'
-        end
-        indexes :length_list, type: 'multi_field' do
-          indexes :length_list, analyzer: 'keyword'
-        end
-        indexes :occasion_list, type: 'multi_field' do
-          indexes :occasion_list, analyzer: 'keyword'
-        end
-        indexes :collar_type_list, type: 'multi_field' do
-          indexes :collar_type_list, analyzer: 'keyword'
-        end
-        indexes :body_type_list, type: 'multi_field' do
-          indexes :body_type_list, analyzer: 'keyword'
-        end
-        indexes :back_list, type: 'multi_field' do
-          indexes :back_list, analyzer: 'keyword'
-        end
-        indexes :sleeve_type_list, type: 'multi_field' do
-          indexes :sleeve_type_list, analyzer: 'keyword'
-        end
-        indexes :length_of_sleeve_list, type: 'multi_field' do
-          indexes :length_of_sleeve_list, analyzer: 'keyword'
-        end
-        indexes :neckline_type_list, type: 'multi_field' do
-          indexes :neckline_type_list, analyzer: 'keyword'
-        end
-        indexes :waistline_list, type: 'multi_field' do
-          indexes :waistline_list, analyzer: 'keyword'
-        end
-        indexes :belt_type_list, type: 'multi_field' do
-          indexes :belt_type_list, analyzer: 'keyword'
-        end
-        indexes :hemline_list, type: 'multi_field' do
-          indexes :hemline_list, analyzer: 'keyword'
-        end
-        indexes :item_shape_list, type: 'multi_field' do
-          indexes :item_shape_list, analyzer: 'keyword'
-        end
-        indexes :skirt_type_list, type: 'multi_field' do
-          indexes :skirt_type_list, analyzer: 'keyword'
-        end
-        indexes :item_type_list, type: 'multi_field' do
-          indexes :item_type_list, analyzer: 'keyword'
-        end
-        indexes :style_list, type: 'multi_field' do
-          indexes :style_list, analyzer: 'keyword'
-        end
-        indexes :other_detail_list, type: 'multi_field' do
-          indexes :other_detail_list, analyzer: 'keyword'
-        end
-        indexes :fabric_list, type: 'multi_field' do
-          indexes :fabric_list, analyzer: 'keyword'
+        inherited_class.send(:tag_types).each do |tag|
+          index_name = "#{tag}_list".to_sym
+
+          indexes index_name, type: 'multi_field' do
+            indexes index_name, analyzer: 'keyword'
+          end
         end
       end
-
     end
 
     def self.create_index
       #http://localhost:9200/products-development/product/_mapping
       #http://localhost:9200/_mapping/product
-      __elasticsearch__.client.indices.delete index: Product.index_name rescue nil
-      __elasticsearch__.client.indices.create index: Product.index_name,
-                                              body: {settings: Product.settings.to_hash, mappings: Product.mappings.to_hash}
+      __elasticsearch__.client.indices.delete(index: self.index_name) rescue nil
+      __elasticsearch__.client.indices.create index: self.index_name,
+                                              body: {settings: self.settings.to_hash, mappings: self.mappings.to_hash}
+
     end
 
     def self.redindex_all
@@ -101,7 +47,7 @@ module Searchable
 
         string_conditions = "'query' : { 'match' : { 'name' : '#{string_conditions}' } }," unless string_conditions.blank?
         price_condition = unless price.blank?
-           "{'range' : {'price' : {'gte' : #{price['min'].to_i * 100}, 'lte' : #{price['max'].to_i * 100}}}}"
+          "{'range' : {'price' : {'gte' : #{price['min'].to_i}, 'lte' : #{price['max'].to_i }}}}"
         else
           "{'range' : {'price' : {'gte' : 0}}}"
         end

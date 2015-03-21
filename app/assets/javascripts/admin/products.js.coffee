@@ -36,3 +36,4 @@ $ ->
       $(e.target).val('')
       e.preventDefault()
       return false
+  $('#tags a:first').tab('show')

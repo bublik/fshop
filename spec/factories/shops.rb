@@ -3,15 +3,16 @@
 # Table name: shops
 #
 #  id                            :integer          not null, primary key
-#  name                          :string(255)
+#  name                          :string
 #  shipping                      :text
-#  affiliate_network_id          :string(255)
-#  affiliate_network_merchant_id :string(255)
+#  affiliate_network_id          :string
+#  affiliate_network_merchant_id :string
 #  created_at                    :datetime
 #  updated_at                    :datetime
-#  logo                          :string(255)
-#  data_feeds_count              :integer          default(0)
+#  logo                          :string
+#  data_feeds_count              :integer          default("0")
 #  target_url                    :string(500)
+#  contact_email                 :string
 #
 
 # Read about factories at https://github.com/thoughtbot/factory_girl

@@ -1,6 +1,7 @@
 = simple_form_for [:admin, @shop] do |f|
   = f.input :name
   = f.input :logo, as: :file
+  = f.input :contact_email
   = f.input :target_url
   = f.input :shipping, as: :text
   = f.input :affiliate_network_id

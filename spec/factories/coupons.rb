@@ -4,11 +4,11 @@
 #
 #  id         :integer          not null, primary key
 #  shop_id    :integer
-#  name       :string(255)
-#  code       :string(255)
+#  name       :string
+#  code       :string
 #  start_date :datetime
 #  end_date   :datetime
-#  target_url :string(255)
+#  target_url :string(500)
 #  created_at :datetime
 #  updated_at :datetime
 #

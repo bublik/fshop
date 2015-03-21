@@ -4,10 +4,12 @@
 #
 #  id         :integer          not null, primary key
 #  shop_id    :integer
-#  url        :string(255)
-#  feed_type  :integer          default(0)
+#  url        :string
+#  feed_type  :integer          default("0")
 #  created_at :datetime
 #  updated_at :datetime
+#  sync_date  :datetime
+#  category   :string           default("одежда"), not null
 #
 
 require 'uri'
@@ -19,7 +21,6 @@ class DataFeed < ActiveRecord::Base
 
   validates_presence_of :url
   validates_uniqueness_of :url
-  #validates_format_of :url, with: URI.regexp(['http', 'https'])
   validates_associated :shop
   validates_inclusion_of :feed_type, in: DataFeed.feed_types.keys
 
@@ -50,7 +51,7 @@ class DataFeed < ActiveRecord::Base
         # puts offer.description
         # puts offer.model
         # puts offer.vendor
-        Product.create_from_offer(self.shop_id, offer)
+        self.category.constantize.create_from_offer(self.shop_id, offer)
       end
 
     rescue Goods::XML::InvalidFormatError => e

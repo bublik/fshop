@@ -5,6 +5,7 @@
 %table.table.table-hover
   %tr
     %th Магазин
+    %th Контактный емейл
     %th Информация о доставке
     %th Партнерская сеть ID
     %th Партнер продавец ID
@@ -16,6 +17,7 @@
         = shop.logo
         %div= shop.name
         %div= link_to("Адреса экспорта #{shop.data_feeds_count}", admin_shop_data_feeds_path(shop))
+      %td= mail_to(shop.contact_email)
       %td= shop.shipping
       %td= shop.affiliate_network_id
       %td= shop.affiliate_network_merchant_id

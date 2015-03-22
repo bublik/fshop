@@ -7,14 +7,16 @@
   .row
     - @products.decorate.each do |product|
       .col-xs-15.col-sm-10.col-md-6
-        = div_for product, class: 'pending', data: {id: product.id}, style: 'height: 300px' do
-          = link_to(image_tag(product.original_image, width: '100%'), admin_product_path(product, state: 'verify'), remote: true, method: :put)
+        = div_for product, class: 'pending', data: {id: product.id}, style: 'overflow: hidden;' do
+          = link_to(image_tag(product.original_image, width: '100%', class: 'img-thumbnail'), admin_product_path(product, state: 'verify'), remote: true, method: :put)
+        .clearfix
         .title
-          %div= link_to(product.name, product.link)
-          %em= product.shop
+          %div= link_to(product.name, product.link, title: 'оригинал на сайте продавца', class: 'btn btn-default btn-xs', target: '_blank')
+          %em
+            = product.shop
         .description= strip_tags product.description
-        = link_to('read more', '#', class: 'more', data: {target: "#{dom_id(product.object)}"})
-  .row.text-right
-    = link_to('all', '#', remote: true, class: 'btn btn-info select_all')
+        = link_to('больше', '#', class: 'more', data: {target: "#{dom_id(product.object)}"})
+  .row.text-center
+    = link_to('Пропустить все 5', '#', remote: true, class: 'btn btn-info select_all')
     - unless @products.blank?
-      = link_to('Next', verification_admin_products_path(shop_id: @products.first.shop_id), remote: true, class: 'btn btn-success next')
+      = link_to('Дальще', verification_admin_products_path(shop_id: @products.first.shop_id), remote: true, class: 'btn btn-success next')

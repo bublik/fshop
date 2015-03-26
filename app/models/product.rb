@@ -125,7 +125,7 @@ class Product < ActiveRecord::Base
   end
 
   def related_products
-    self.class.related_products(self).where(is_active: true).where.not(sync_hash: self.id).limit(4) rescue self.class.newest.limit(5)
+    self.class.related_products(self).active.where.not(sync_hash: self.id).limit(4) rescue self.class.newest.limit(5)
   end
 
   def self.create_from_offer(shop_id, offer)
@@ -149,7 +149,7 @@ class Product < ActiveRecord::Base
         keywords: keywords.join(', '),
 
       }
-      product.send("#{model_name.singular}_category_list=", offer.category.name)
+    #  product.send("#{model_name.singular}_category_list=", offer.category.name)
     else
       product.attributes = {
         price: offer.price,

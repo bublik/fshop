@@ -25,7 +25,7 @@ class ProductsController < ApplicationController
 
   def search
     @products = if params[:tag_name].present?
-      Product.where(type: params[:type]).tagged_with(params[:tag_name]).page(params[:page]).per(30)
+      Product.published.where(type: params[:type]).tagged_with(params[:tag_name]).page(params[:page]).per(30)
     else
       condition = ''
       if params[:q]

@@ -7,7 +7,7 @@
   .row
     - @products.decorate.each do |product|
       .col-xs-15.col-sm-10.col-md-6
-        = div_for product, class: 'pending', data: {id: product.id}, style: 'overflow: hidden;' do
+        .product.pending{id: product.to_dom_id, data: {id: product.id}, style: 'overflow: hidden;'}
           = link_to(image_tag(product.original_image, width: '100%', class: 'img-thumbnail'), admin_product_path(product, state: 'verify'), remote: true, method: :put)
         .clearfix
         .title

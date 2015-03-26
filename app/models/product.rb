@@ -61,6 +61,10 @@ class Product < ActiveRecord::Base
     [self.name, self.shop.name, self.sku].join(' ')
   end
 
+  def to_dom_id
+    "#{self.class.name.tableize}_#{self.id}"
+  end
+
   aasm column: :state, enum: true do
     state :draft, initial: true
     state :deleted

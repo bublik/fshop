@@ -15,7 +15,7 @@
           %em
             = product.shop
         .description= strip_tags product.description
-        = link_to('больше', '#', class: 'more', data: {target: "#{dom_id(product.object)}"})
+        = link_to('больше', '#', class: 'more', data: {target: "#{product.object.to_dom_id}"})
   .row.text-center
     = link_to('Пропустить все 5', '#', remote: true, class: 'btn btn-info select_all')
     - unless @products.blank?

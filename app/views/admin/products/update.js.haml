@@ -1,4 +1,4 @@
 - if @product.verified? || @product.identified?
-  $("##{dom_id(@product)}").addClass('verified').removeClass('pending')
+  $("##{@product.to_dom_id}").addClass('verified').removeClass('pending')
 - else
-  $("##{dom_id(@product)}").addClass('pending').removeClass('verified')
+  $("##{@product.to_dom_id}").addClass('pending').removeClass('verified')

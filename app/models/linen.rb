@@ -3,6 +3,10 @@ class Linen < Product
   VISIBLE_TAGS = [:linen_category, :linen_size, :linen_occasion, :linen_length, :linen_colour, :linen_textile, :linen_item_type, :linen_style].freeze
   include Searchable
 
+  def to_key
+    ['linen', self.id]
+  end
+
   def tag_types
     self.class.tag_types
   end

@@ -1,4 +1,4 @@
-%h1 Listing products
+%h1 Товары #{action_name.eql?('identification') ? 'ожидают модерации' : 'опубликованные'}
 
 %table.table.table-hover.item-list
   %tr
@@ -9,7 +9,7 @@
     %th Управление
 
   - @products.decorate.each do |product|
-    %tr.item-item[product.object]
+    %tr.item-item{id: product.object.to_dom_id}
       %td.text-center{style: 'width: 200px'}
         = link_to(product.thumb_image, admin_product_path(product.object))
         %div= product.name

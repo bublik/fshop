@@ -16,14 +16,15 @@ class Admin::ProductsController < AdminController
   def identification
     @product = Product.identified
     @product = @product.where(shop_id: params[:shop_id]) if params[:shop_id].present?
-    @product = @product.first
 
-    if @product
+    if params[:id]
+      @product = @product.find(params[:id])
       @product = @product.decorate
       session[:back_path] = identification_admin_products_path
       render :edit
     else
-      redirect_to admin_path, notice: 'No pending products!'
+      @products = @product.page(params[:page]).per(10)
+      render :index
     end
   end
 

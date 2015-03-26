@@ -3,8 +3,9 @@ class ProductsController < ApplicationController
   before_action :set_class, only: [:index, :search]
 
   def index
-    @products = Product.opened.where(type: params[:type]).page(params[:page]).per(30)
-
+    @products = Product.opened
+    @products = @products.where(type: params[:type]) if params[:type].present?
+    @products = @products.page(params[:page]).per(30)
 
     respond_to do |format|
       format.html
@@ -70,7 +71,7 @@ class ProductsController < ApplicationController
 
   private
   def set_class
-    @product_class = params[:type].constantize
+    @product_class = (params[:type] || 'Product').constantize
   end
 end
 

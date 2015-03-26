@@ -57,3 +57,7 @@ $ ->
   #root: "/products/"
   if window.location.hash.indexOf('!') > -1
     window.location = window.location.hash.substring(2)
+
+  $('.form-search a').on 'click', (e)->
+    $('.form-search input.type').val($(e.target).data('type'))
+    $('.form-search').submit()

@@ -38,7 +38,6 @@ module Searchable
 
     def self.search(q, page = 0) # perpage 30
       unless q.kind_of?(String)
-
         price = q['price']
         string_conditions = q.delete('q')
         tags = q.except('price')
@@ -62,6 +61,18 @@ module Searchable
                  #{[price_condition, tags_condition].compact.join(',') }
               ,{ 'terms' : { 'is_active' : [true]}}, { 'terms' : { 'state' : ['published']}}
               ]
+            }
+           }
+          }
+        }
+        }".gsub("'", "\"")
+      else
+        q = "{
+          'query' : {
+          'filtered' : {
+            'filter' : {
+              'bool' : {
+               'must' : [{ 'terms' : { 'is_active' : [true]}}, { 'terms' : { 'state' : ['published']}}]
             }
            }
           }

@@ -18,19 +18,19 @@ class ProductDecorator < Draper::Decorator
   end
 
   def image(style_class = '')
-    h.image_tag(object.image.url, class: style_class, title: object.name)
+    h.image_tag(object.image.url, class: style_class, alt: object.name)
   end
 
   def image_responsive
-    h.image_tag(object.image.preview.url, class: 'img-responsive')
+    h.image_tag(object.image.preview.url, class: 'img-responsive', alt: object.name)
   end
 
   def preview_image
-    h.image_tag(object.image.preview.url, title: object.name)
+    h.image_tag(object.image.preview.url, alt: object.name)
   end
 
   def thumb_image
-    h.image_tag(object.image.thumb.url, title: object.name)
+    h.image_tag(object.image.thumb.url, alt: object.name)
   end
 
   def description

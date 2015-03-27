@@ -164,13 +164,6 @@ class Product < ActiveRecord::Base
     product
   end
 
-  def self.types
-    ['Linen', 'Clothing']
-    # @product_types ||= Product.pluck(:type).compact.uniq
-    # @product_types = ['Linen', 'Clothing'] if @product_types.blank?
-    # @product_types
-  end
-
   def self.create_thumb(id)
     product = find(id)
     product.remote_image_url = product.original_image

@@ -1,7 +1,7 @@
 = simple_form_for [:admin, @data_feed.shop, @data_feed] do |f|
   = f.input :shop_id, as: :hidden
   = f.input :url
-  = f.input :category, as: :select, collection: Product.types, include_blank: false
+  = f.input :category, as: :select, collection: Product.subclasses.map(&:name), include_blank: false
   = f.input :feed_type, collection: DataFeed.feed_types.keys, include_blank: false
   .row
     .col-xs-6.col-sm-offset-6

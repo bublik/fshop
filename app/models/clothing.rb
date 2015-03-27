@@ -6,10 +6,6 @@ class Clothing < Product
   VISIBLE_TAGS = [:clothing_category, :clothing_item_type, :clothing_size, :clothing_occasion, :clothing_length, :clothing_colour].freeze
   include Searchable
 
-  def to_key
-    ['clothing', self.id]
-  end
-
   def tag_types
     self.class.tag_types
   end

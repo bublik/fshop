@@ -75,7 +75,9 @@ class Product < ActiveRecord::Base
     #обозначили как удаленное и мы его больше не показываем нигде
     event :hide do
       transitions to: :deleted,
-                  after_transition: Proc.new { |obj, *args| IndexerWorker.perform_async(:delete, obj.id) if obj.aasm.from_state.eql?(:published) }
+                  after_transition: Proc.new { |obj, *args|
+                    obj.remove_all_tags
+                    IndexerWorker.perform_async(:delete, obj.id) if obj.aasm.from_state.eql?(:published) }
     end
 
     # подтвердили продукт как нормальный для показа и отправили в очерель для создания превью
@@ -91,9 +93,18 @@ class Product < ActiveRecord::Base
     # после редактирования админом продукт становится доступный в публичной части
     event :publish do
       transitions from: :identified,
-                  to: :published
-      #on_transition: Proc.new { |obj, *args| IndexerWorker.perform_async(:index, obj.id) }
+                  to: :published,
+                  on_transition: Proc.new { |obj, *args| obj.update_keywords }
+      #IndexerWorker.perform_async(:index, obj.id)
     end
+  end
+
+  def update_keywords
+    self.update_attribute(:keywords, self.cached_tags.values.flatten.join(', '))
+  end
+
+  def remove_all_tags
+    self.tag_types.each { |tag_type| self.send("#{tag_type}=",[]) }
   end
 
   def the_same_price?
@@ -146,10 +157,8 @@ class Product < ActiveRecord::Base
         price: offer.price,
         original_price: offer.price,
         brand: offer.vendor,
-        keywords: keywords.join(', '),
-
+        keywords: keywords.join(', ')
       }
-    #  product.send("#{model_name.singular}_category_list=", offer.category.name)
     else
       product.attributes = {
         price: offer.price,

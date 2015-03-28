@@ -1,5 +1,9 @@
 - content_for(:page_title) do
   = @product.name
+- content_for(:description) do
+  = @product.description
+- content_for(:keywords) do
+  = @product.keywords
 - content_for(:meta_content) do
   %meta{property: 'fb:app_id', content: Rails.application.secrets.fb_app_id}
   %meta{property: 'og:locale', content: "ru_RU"}
@@ -8,15 +12,10 @@
   %meta{property: 'og:title', content: @product.name}
   %meta{property: 'og:site_name', content: Rails.application.secrets.site_name}
   %meta{property: 'og:description', content: @product.description}
-
-- content_for(:description) do
-  = @product.description
-
 %section.container.item-single
   .row
     .col-xs-30.col-md-10
       = @product.image('img-responsive')
-      -#.fb-share-button{data: {href: request.url, layout: "button_count"}}
       %h4 Особенности
       - @product.cached_tags.except(:occasion).each do |tag_type, tags|
         .row.tags
@@ -25,14 +24,13 @@
             - tags.each do |name|
               = link_to(name, tag_products_path(type: @product.type, tag_type: tag_type, tag_name: name), title: name, class: 'btn btn-default btn-xs')
       .addthis_sharing_toolbox
-      -#%h4 Коментарии
+      -#.fb-share-button{data: {href: request.url, layout: "button_count"}}
       -#<div class="fb-comments" data-href="http://fashiondress.club/products/3603-angel-2244" data-numposts="5" data-width="380" data-colorscheme="light"></div>
     %section.col-xs-30.col-md-17
       %h1= @product.name
       .row
         .col-md-20
-          - if session[:admin]
-            = link_to('admin edit', edit_admin_product_path(@product), class: 'btn btn-xs btn-info')
+          = session[:admin] && link_to('admin edit', edit_admin_product_path(@product), class: 'btn btn-xs btn-info')
           %dl
             - unless @product.brand.blank?
               %dt Торговые марки
@@ -45,7 +43,6 @@
         .col-md-10.price-block
           - unless @product.the_same_price?
             .original-price= @product.original_price
-
           .current-price= @product.price
           %a.btn.btn-primary.form-control.btn-lg{:href => go_path(url: @product.link, shop_id: @product.shop_id), :rel => 'nofollow'}
             Купить
@@ -75,8 +72,7 @@
             .col-xs-30.show-more
               %span Показать больше купонов
       %section.item-faq
-        -#%header
-          %h4 Вопросы и ответы
+        -#%header%h4 Вопросы и ответы
         %dl
           - @product.questions.decorate.each do |question|
             %dt= question.title
@@ -86,29 +82,9 @@
                 %dl
                   %dt= question.title
                   %dd= question.message
-        %footer
-          = render 'questions/form'
+        %footer= render 'questions/form'
     %aside.col-sm-30.col-md-3
       %header Похожие
-      .row
-        = render partial: 'products/related_products', locals: { products: @product.related_products.decorate}
-
--#:javascript
-  window.fbAsyncInit = function() {
-    FB.init({
-      appId      : '#{Rails.application.secrets.fb_app_id}',
-      xfbml      : true,
-      version    : 'v2.2'
-    });
-  };
-
-  (function(d, s, id){
-    var js, fjs = d.getElementsByTagName(s)[0];
-    if (d.getElementById(id)) {return;}
-    js = d.createElement(s); js.id = id;
-    js.src = "//connect.facebook.net/en_US/sdk.js";
-    fjs.parentNode.insertBefore(js, fjs);
-    }(document, 'script', 'facebook-jssdk'));
-
+      .row= render partial: 'products/related_products', locals: { products: @product.related_products.decorate}
 <!-- Go to www.addthis.com/dashboard to customize your tools -->
 <script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=bublik" async="async"></script>

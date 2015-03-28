@@ -13,10 +13,6 @@ class ProductDecorator < Draper::Decorator
     h.simple_format(_shop.shipping)
   end
 
-  def keywords
-    object.keywords
-  end
-
   def image(style_class = '')
     h.image_tag(object.image.url, class: style_class, alt: object.name)
   end

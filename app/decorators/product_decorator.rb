@@ -14,7 +14,7 @@ class ProductDecorator < Draper::Decorator
   end
 
   def image(style_class = '')
-    h.image_tag(object.image.url, class: style_class, alt: object.name)
+    h.image_tag(object.image.url, class: style_class, alt: object.name, itemprop: 'image')
   end
 
   def image_responsive
@@ -30,15 +30,19 @@ class ProductDecorator < Draper::Decorator
   end
 
   def description
-    h.simple_format(object.description, class: 'description')
+    h.simple_format(object.description, class: 'description', itemprop: 'description')
   end
 
   def price
-    price_with_currency(object.price)
+    h.content_tag(:span, object.price, class: 'price', itemprop: 'price')
   end
 
   def original_price
-    price_with_currency(object.original_price)
+    h.content_tag(:span, object.original_price, class: 'price', itemprop: 'price')
+  end
+
+  def currency
+    h.content_tag(:span, object.currency, class: 'price')
   end
 
   def admin_tags_list
@@ -58,7 +62,4 @@ class ProductDecorator < Draper::Decorator
     object.shop
   end
 
-  def price_with_currency(cents)
-    h.content_tag(:span, h.number_to_currency(cents, unit: object.currency), class: 'price')
-  end
 end

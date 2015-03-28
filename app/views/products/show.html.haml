@@ -1,7 +1,7 @@
 - content_for(:page_title) do
   = @product.name
 - content_for(:description) do
-  = @product.description
+  = @product.object.description
 - content_for(:keywords) do
   = @product.keywords
 - content_for(:meta_content) do
@@ -13,7 +13,7 @@
   %meta{property: 'og:site_name', content: Rails.application.secrets.site_name}
   %meta{property: 'og:description', content: @product.description}
 %section.container.item-single
-  .row
+  .row{itemscope: '', itemtype: "http://schema.org/Product"}
     .col-xs-30.col-md-10
       = @product.image('img-responsive')
       %h4 Особенности
@@ -27,23 +27,28 @@
       -#.fb-share-button{data: {href: request.url, layout: "button_count"}}
       -#<div class="fb-comments" data-href="http://fashiondress.club/products/3603-angel-2244" data-numposts="5" data-width="380" data-colorscheme="light"></div>
     %section.col-xs-30.col-md-17
-      %h1= @product.name
+      %h1{itemprop: 'name'}= @product.name
       .row
         .col-md-20
           = session[:admin] && link_to('admin edit', edit_admin_product_path(@product), class: 'btn btn-xs btn-info')
           %dl
             - unless @product.brand.blank?
               %dt Торговые марки
-              %dd= @product.brand
+              %dd{itemprop: 'brand'}= @product.brand
             - unless @product.cached_tags[:occasion].blank?
               %dt Повод
               %dd.tags
                 - (@product.cached_tags[:occasion] || []).each do |name|
                   = link_to(name, tag_products_path(tag_type: 'occasion', tag_name: name), title: name, class: 'btn btn-default btn-xs')
-        .col-md-10.price-block
+        .col-md-10.price-block{itemprop: 'offers', itemscope: '', itemtype: 'http://schema.org/Offer'}
+          %meta{itemprop: 'priceCurrency', content: @product.object.currency }
           - unless @product.the_same_price?
-            .original-price= @product.original_price
-          .current-price= @product.price
+            .original-price
+              = @product.original_price
+              = @product.currency
+          .current-price
+            = @product.price
+            = @product.currency
           %a.btn.btn-primary.form-control.btn-lg{:href => go_path(url: @product.link, shop_id: @product.shop_id), :rel => 'nofollow'}
             Купить
             %i.glyphicon.glyphicon-share-alt

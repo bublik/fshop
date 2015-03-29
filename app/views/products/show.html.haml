@@ -11,7 +11,8 @@
   %meta{property: 'og:image', content: "http://#{request.host}#{@product.object.image.preview.url}"}
   %meta{property: 'og:title', content: @product.name}
   %meta{property: 'og:site_name', content: Rails.application.secrets.site_name}
-  %meta{property: 'og:description', content: @product.description}
+  %meta{property: 'og:description', content: @product.object.description}
+
 %section.container.item-single
   .row{itemscope: '', itemtype: "http://schema.org/Product"}
     .col-xs-30.col-md-10

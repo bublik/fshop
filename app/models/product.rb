@@ -92,9 +92,9 @@ class Product < ActiveRecord::Base
 
     # после редактирования админом продукт становится доступный в публичной части
     event :publish do
-      transitions from: :identified,
-                  to: :published,
-                  on_transition: Proc.new { |obj, *args| obj.update_keywords }
+      transitions to: :published,
+                  from: :identified,
+                  after_transition: Proc.new { |obj, *args| obj.update_keywords }
       #IndexerWorker.perform_async(:index, obj.id)
     end
   end
@@ -104,7 +104,7 @@ class Product < ActiveRecord::Base
   end
 
   def remove_all_tags
-    self.tag_types.each { |tag_type| self.send("#{tag_type}=",[]) }
+    self.tag_types.each { |tag_type| self.send("#{tag_type}=", []) }
   end
 
   def the_same_price?

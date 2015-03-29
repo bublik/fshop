@@ -15,7 +15,6 @@ module Searchable
         indexes :price, type: 'integer'
         inherited_class.send(:tag_types).each do |tag|
           index_name = "#{tag}_list".to_sym
-
           indexes index_name, type: 'multi_field' do
             indexes index_name, analyzer: 'keyword'
           end
@@ -33,6 +32,7 @@ module Searchable
     end
 
     def self.redindex_all
+      #Clothing.opened.find_each do |cl| IndexerWorker.perform_async(:index, cl.id) end #add to index after recreate index
       self.opened.collect { |record| record.save }
     end
 

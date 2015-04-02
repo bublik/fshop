@@ -19,6 +19,7 @@
         = link_to(product.preview_image, product, title: product.name)
         = link_to(product.name, product, title: product.name, class: 'title')
         = product.price
+        = product.currency
   .row
     .col-xs-30.text-center
       = link_to('Больше', products_path(type: 'Clothing'), class: 'btn btn-primary btn-lg')

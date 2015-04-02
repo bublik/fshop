@@ -13,7 +13,7 @@
 
 %section.item-list
   .row
-    %aside#searchfilter.col-sm-30.col-md-6
+    %aside#searchfilter.col-sm-15.col-md-6
       = form_tag '/products/search', id: 'filter_form', remote: true, method: :get do
         = check_box_tag :type, params[:type], 'checked', class: 'hidden skip'
         - if params[:q].present?
@@ -41,7 +41,7 @@
           %h4.styled Советы по стилю
           %p!= @page.style_typs
 
-    #selected_tags.col-sm-120.col-md-24
+    #selected_tags.col-sm-15.col-md-24
       - if defined?(@page)
         %h3= @page.title
       != selected_tag_link(params[:type])

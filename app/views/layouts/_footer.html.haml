@@ -1,22 +1,21 @@
-%footer.footer
-  %section.container
-    .row
-      %ul.col-xs-30.col-md-6
-        %li.heading Компания
-        %li= link_to('О нас', about_path)
-        %li
-          %a{:href => "/blogs"} Блог
-        %li= link_to('Условия пользования', terms_path)
-        %li= link_to('Приватность', privacy_path)
-      %ul.col-xs-30.col-md-6
-        %li.heading Будьте с нами
-        %li
-          %a{:href => ""} Facebook
-      %ul.col-xs-30.col-md-6
-        %li.heading Помощь
-        %li
-          %a{:href => faq_path} Частые вопросы
-        %li
-          %a{:href => contact_us_path} Обратная связь
-      .col-xs-30.col-md-12
-        %span.pull-right © 2014 Новенькое. Все права зарегистрированы.
+%section.container
+  .row
+    %ul.col-xs-10.col-md-6
+      %li.heading Компания
+      %li= link_to('О нас', about_path)
+      %li
+        %a{:href => "/blogs"} Блог
+      %li= link_to('Условия пользования', terms_path)
+      %li= link_to('Приватность', privacy_path)
+    %ul.col-xs-10.col-md-6
+      %li.heading Будьте с нами
+      %li
+        %a{:href => ""} Facebook
+    %ul.col-xs-10.col-md-6
+      %li.heading Помощь
+      %li
+        %a{:href => faq_path} Частые вопросы
+      %li
+        %a{:href => contact_us_path} Обратная связь
+    .col-xs-30.col-md-12
+      %span.pull-right © 2014 Новенькое. Все права зарегистрированы.

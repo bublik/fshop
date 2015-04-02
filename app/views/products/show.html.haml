@@ -20,48 +20,48 @@
       %h4 Особенности
       - @product.cached_tags.except(:occasion).each do |tag_type, tags|
         .row.tags
-          .col-md-10 #{t(tag_type)}:
-          .col-md-20
+          .col-md-10.col-xs-10 #{t(tag_type)}:
+          .col-md-20.col-xs-20
             - tags.each do |name|
               = link_to(name, tag_products_path(type: @product.type, tag_type: tag_type, tag_name: name), title: name, class: 'btn btn-default btn-xs')
       .addthis_sharing_toolbox
       -#.fb-share-button{data: {href: request.url, layout: "button_count"}}
       -#<div class="fb-comments" data-href="http://fashiondress.club/products/3603-angel-2244" data-numposts="5" data-width="380" data-colorscheme="light"></div>
-    %section.col-xs-30.col-md-17
-      %h1{itemprop: 'name'}= @product.name
-      .row
-        .col-md-20
-          = session[:admin] && link_to('admin edit', edit_admin_product_path(@product), class: 'btn btn-xs btn-info')
-          %dl
-            - unless @product.brand.blank?
-              %dt Торговые марки
-              %dd{itemprop: 'brand'}= @product.brand
-            - unless @product.cached_tags[:occasion].blank?
-              %dt Повод
-              %dd.tags
-                - (@product.cached_tags[:occasion] || []).each do |name|
-                  = link_to(name, tag_products_path(tag_type: 'occasion', tag_name: name), title: name, class: 'btn btn-default btn-xs')
-        .col-md-10.price-block{itemprop: 'offers', itemscope: '', itemtype: 'http://schema.org/Offer'}
-          %meta{itemprop: 'priceCurrency', content: @product.object.currency }
-          - unless @product.the_same_price?
-            .original-price
-              = @product.original_price
-              = @product.currency
-          .current-price
-            = @product.price
-            = @product.currency
-          %a.btn.btn-primary.form-control.btn-lg{:href => go_path(url: @product.link, shop_id: @product.shop_id), :rel => 'nofollow'}
-            Купить
-            %i.glyphicon.glyphicon-share-alt
-      = @product.description
+    .col-xs-30.col-md-17
       %section
-        %header
-          %h4 О магазине
-          .row
-            .col-md-10
-              %a{:href => "#{@shop.target_url}", :rel => 'nofollow'}
-                %img.img-responsive{:src => @product.shop_logo}/
-            .col-md-20= @product.shipping_info
+        %h1{itemprop: 'name'}= @product.name
+        .row
+          .col-md-20.col-xs-10
+            = session[:admin] && link_to('admin edit', edit_admin_product_path(@product), class: 'btn btn-xs btn-info')
+            %dl
+              - unless @product.brand.blank?
+                %dt Торговые марки
+                %dd{itemprop: 'brand'}= @product.brand
+              - unless @product.cached_tags[:occasion].blank?
+                %dt Повод
+                %dd.tags
+                  - (@product.cached_tags[:occasion] || []).each do |name|
+                    = link_to(name, tag_products_path(tag_type: 'occasion', tag_name: name), title: name, class: 'btn btn-default btn-xs')
+            = @product.description
+          .col-md-10.price-block{itemprop: 'offers', itemscope: '', itemtype: 'http://schema.org/Offer'}
+            %meta{itemprop: 'priceCurrency', content: @product.object.currency }
+            - unless @product.the_same_price?
+              .original-price
+                = @product.original_price
+                = @product.currency
+            .current-price
+              = @product.price
+              = @product.currency
+            %a.btn.btn-primary.form-control.btn-lg{:href => go_path(url: @product.link, shop_id: @product.shop_id), :rel => 'nofollow'}
+              Подробней
+              %i.glyphicon.glyphicon-share-alt
+
+        %h4 О магазине
+        .row
+          .col-md-10
+            %a{:href => "#{@shop.target_url}", :rel => 'nofollow'}
+              %img.img-responsive{:src => @product.shop_logo}/
+          .col-md-20= @product.shipping_info
       - unless @coupons.empty?
         %section.coupons
           %header
@@ -77,7 +77,7 @@
           .row
             .col-xs-30.show-more
               %span Показать больше купонов
-      %section.item-faq
+      %section.item-faq.hidden-xs.hidden-sm
         -#%header%h4 Вопросы и ответы
         %dl
           - @product.questions.decorate.each do |question|
@@ -89,8 +89,8 @@
                   %dt= question.title
                   %dd= question.message
         %footer= render 'questions/form'
-    %aside.col-sm-30.col-md-3
-      %header Похожие
-      .row= render partial: 'products/related_products', locals: { products: @product.related_products.decorate}
+    .col-sm-30.col-md-3
+      %aside
+        .row= render partial: 'products/related_products', locals: { products: @product.related_products.decorate}
 <!-- Go to www.addthis.com/dashboard to customize your tools -->
 <script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=bublik" async="async"></script>

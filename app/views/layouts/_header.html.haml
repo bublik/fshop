@@ -1,54 +1,55 @@
 %header.header
-  .container.clearfix
+  .container.clearfix.hidden-sm.hidden-xs
     %a.logo{:href => "/"} Мой подиум
     .slogan Найдите что то новенькое
-  - unless controller_name.eql?('blogs')
-    %nav.navbar.navbar-default{:role => "navigation"}
-      .container
-        .collapse.navbar-collapse
-          %ul.nav.navbar-nav
-            -#%li
-              = link_to_unless_current('Новые', products_path) do
-                %a{href: '#', class: 'active'} Новые
-            %li
-              = link_to_unless_current('Одежда', '/products/clothing') do
-                %a{href: '#', class: 'active'} Одежда
-            %li
-              = link_to_unless_current('Белье', '/products/linen') do
-                %a{href: '#', class: 'active'} Белье
-            -#%li
-            -#  = link_to_unless_current('Новые', products_path) do
-            -#    %a{href: '#', class: 'active'} Новые
-            -#%li
-            -#  = link_to_unless_current('Свадебные', '/wedding-items') do
-            -#    %a{href: '#', class: 'active'} Свадебные
-            -#%li
-            -#  = link_to_unless_current('Официальные', '/formal-items') do
-            -#    %a{href: '#', class: 'active'} Официальные
-            -#%li
-            -#  = link_to_unless_current('Вечерние', '/evening-items') do
-            -#    %a{href: '#', class: 'active'} Вечерние
-            -#%li
-            -#  = link_to_unless_current('Для встреч', '/party-items') do
-            -#    %a{href: '#', class: 'active'} Для встреч
-            -#%li
-            -#  = link_to_unless_current('Коктельные', '/coctail-items') do
-            -#    %a{href: '#', class: 'active'} Коктельные
-            -#%li
-            -#  = link_to_unless_current('Бальные', '/prom-items') do
-            -#    %a{href: '#', class: 'active'} Бальные
-            -#%li
-            -#  = link_to_unless_current('Дешовые', '/cheap-items') do
-            -#    %a{href: '#', class: 'active'} Дешовые
-          %form.form-search.navbar-form.navbar-right{action: search_products_path}
-            .input-group
-              %input.form-control.search{placeholder: 'Найти...', name: 'q', value: params[:q], type: 'text'}/
-              %input.type{type: 'hidden', name: 'type', value: 'Clothing'}
-              .input-group-btn
-                %button.btn.btn-default.dropdown-toggle{type: 'button', data:{toggle: 'dropdown'}, aria:{expanded: 'false'}}
-                  Раздел
-                  %span.caret
-                %ul.dropdown-menu.dropdown-menu-right{role: 'menu'}
-                  %li <a href="#search_clothing" data-type="Clothing">Одежда</a>
-                  %li <a href="#search_linen"  data-type="Linen">Белье</a>
-                  %li <a href="#search_accessory">Аксессуары</a>
+
+- unless controller_name.eql?('blogs')
+  %nav.navbar.navbar-default{:role => "navigation"}
+    .container
+      .collapse.navbar-collapse
+        %ul.nav.navbar-nav
+          -#%li
+            = link_to_unless_current('Новые', products_path) do
+              %a{href: '#', class: 'active'} Новые
+          %li
+            = link_to_unless_current('Одежда', '/products/clothing') do
+              %a{href: '#', class: 'active'} Одежда
+          %li
+            = link_to_unless_current('Белье', '/products/linen') do
+              %a{href: '#', class: 'active'} Белье
+          -#%li
+          -#  = link_to_unless_current('Новые', products_path) do
+          -#    %a{href: '#', class: 'active'} Новые
+          -#%li
+          -#  = link_to_unless_current('Свадебные', '/wedding-items') do
+          -#    %a{href: '#', class: 'active'} Свадебные
+          -#%li
+          -#  = link_to_unless_current('Официальные', '/formal-items') do
+          -#    %a{href: '#', class: 'active'} Официальные
+          -#%li
+          -#  = link_to_unless_current('Вечерние', '/evening-items') do
+          -#    %a{href: '#', class: 'active'} Вечерние
+          -#%li
+          -#  = link_to_unless_current('Для встреч', '/party-items') do
+          -#    %a{href: '#', class: 'active'} Для встреч
+          -#%li
+          -#  = link_to_unless_current('Коктельные', '/coctail-items') do
+          -#    %a{href: '#', class: 'active'} Коктельные
+          -#%li
+          -#  = link_to_unless_current('Бальные', '/prom-items') do
+          -#    %a{href: '#', class: 'active'} Бальные
+          -#%li
+          -#  = link_to_unless_current('Дешовые', '/cheap-items') do
+          -#    %a{href: '#', class: 'active'} Дешовые
+        %form.form-search.navbar-form.navbar-right{action: search_products_path}
+          .input-group
+            %input.form-control.search{placeholder: 'Найти...', name: 'q', value: params[:q], type: 'text'}/
+            %input.type{type: 'hidden', name: 'type', value: 'Clothing'}
+            .input-group-btn
+              %button.btn.btn-default.dropdown-toggle{type: 'button', data:{toggle: 'dropdown'}, aria:{expanded: 'false'}}
+                Раздел
+                %span.caret
+              %ul.dropdown-menu.dropdown-menu-right{role: 'menu'}
+                %li <a href="#search_clothing" data-type="Clothing">Одежда</a>
+                %li <a href="#search_linen"  data-type="Linen">Белье</a>
+                %li <a href="#search_accessory">Аксессуары</a>

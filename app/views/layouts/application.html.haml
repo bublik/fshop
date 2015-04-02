@@ -15,11 +15,11 @@
       <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
   %body
     = render 'layouts/header'
-    %section.container
+    .container
       - if session[:admin]
         .text-right= link_to('Управление', admin_shops_path)
       = render 'layouts/flash'
       = yield
-    = render 'layouts/footer'
+    %footer.footer= render 'layouts/footer'
     - if Rails.env.production?
       = render 'layouts/google_analytix'

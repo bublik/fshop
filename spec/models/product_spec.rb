@@ -22,6 +22,7 @@
 #  updated_at     :datetime
 #  is_active      :boolean          default("true")
 #  cached_tags    :text
+#  type           :string(15)
 #
 
 require 'rails_helper'

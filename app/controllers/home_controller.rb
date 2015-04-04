@@ -2,7 +2,8 @@ class HomeController < ApplicationController
 
   def index
     @shops = Shop.page(params[:page]).per(5)
-    @products = Product.last_records.map(&:decorate)
+    @clothing = Clothing.last_records(5).map(&:decorate)
+    @linen = Linen.last_records(5).map(&:decorate)
     @blogs = Blog.last_records
   end
 

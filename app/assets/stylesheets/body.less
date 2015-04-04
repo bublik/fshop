@@ -1,4 +1,8 @@
 body {
+  .top_line {
+    background: @link-color;
+    height: 7px;
+  }
   .img-responsive {
     margin: 0 auto;
   }
@@ -12,7 +16,20 @@ body {
     margin: 3px;
   }
   .styled {
-    font-family: @font-family-lobster;
+    //font-family: @font-family-lobster;
   }
-
+  .splitter {
+    text-align: center;
+    background: @splitter-bg url('devider_bg.png');
+    margin: 30px 0;
+    padding: 10px;
+    border-radius: 3px;
+    span {
+      display: block;
+      background: @splitter-bg;
+      width: 150px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+  }
 }

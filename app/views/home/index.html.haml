@@ -3,37 +3,57 @@
 - content_for :description do
   Сервис подбора одежды, белья и аксесуаров.
 - content_for :keywords do
-  Женская одежда, мужская, весна, 2015, плятье, сарафан, пижама, костюм, шорты, подобрать.
+  Женская, одежда, мужская, весна, 2015, плятье, сарафан, пижама, костюм, шорты, подобрать, плавки, regfkmybr.
 -#.row
   .col-xs-30
     %img.img-responsive{:src => "http://placehold.it/1200x300"}/
-.row
-  .col-xs-30.mission
-    Подбирайте коллекции из сотен интернет магазинов
-
+.row.categories-list.hidden-xs.hidden-sm
+  .col-xs-10
+    = link_to('Одежда', '/products/clothing', class: 'clothing')
+  .col-xs-10
+    = link_to('Белье', '/products/linen', class: 'linen')
+  .col-xs-10
+    = link_to('Аксессуары', '/products/linen', class: 'accessories')
+.splitter
+  %span ОДЕЖДА
 .new-items.item-list
-  %h2.styled Новые поступления
   .row
-    - @products.each do |product|
+    - @clothing.each do |product|
       .col-xs-15.col-sm-10.col-md-6.item-item
         = link_to(product.preview_image, product, title: product.name)
         = link_to(product.name, product, title: product.name, class: 'title')
         = product.price
         = product.currency
+.splitter
+  %span БЕЛЬЕ
+.new-items.item-list
   .row
-    .col-xs-30.text-center
-      = link_to('Больше', products_path(type: 'Clothing'), class: 'btn btn-primary btn-lg')
+    - @linen.each do |product|
+      .col-xs-15.col-sm-10.col-md-6.item-item
+        = link_to(product.preview_image, product, title: product.name)
+        = link_to(product.name, product, title: product.name, class: 'title')
+        = product.price
+        = product.currency
+.splitter
+  %span АКСЕССУАРЫ
+.mission Ожидается пополнение
 
+.row
+  .col-xs-30.mission
+    Подбирайте коллекции из сотен интернет магазинов
+
+-#.row
+  .col-xs-30.text-center
+    = link_to('Больше', products_path(type: 'Clothing'), class: 'btn btn-primary btn-lg')
+%hr/
 .social
-  .row
-    .col-sm-30.col-md-15.latest-blog-posts
-      %h2.styled Последние записи в блоге
-      - @blogs.each do |blog|
-        .port= link_to(blog.title, blog, title: blog.title)
-    .col-sm-30.col-md-15
-      -#%h2.styled Присоединяйтесь к нам в соц сетях
-    .partners
-  %h2.styled Партнеры
-  %ul.list-inline
-    - @shops.decorate.each do |shop|
-      %li= link_to(shop.logo, shop.target_url, title: shop.name, rel: 'nofollow')
+  .partners
+    %ul.list-inline
+      - @shops.decorate.each do |shop|
+        %li= link_to(shop.logo, shop.target_url, title: shop.name, class: 'partner', rel: 'nofollow')
+  - unless @blogs.blank?
+    .row
+      .col-sm-30.col-md-15.latest-blog-posts
+        %h2 Последние записи в блоге
+        - @blogs.each do |blog|
+          .port= link_to(blog.title, blog, title: blog.title)

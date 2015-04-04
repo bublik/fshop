@@ -1,28 +1,31 @@
 .item-list {
-  margin-top: 40px;
+  margin-top: 20px;
   .item-item {
-    margin-bottom: 40px;
+    margin-bottom: 20px;
     img {
       width: 100%
     }
     .title {
       display: block;
-      margin-top: 20px;
-      color: @text-color;
+      margin-top: 1em;
+      //color: @text-color;
       overflow: hidden;
-      white-space: nowrap;
+      //white-space: nowrap;
       text-overflow: ellipsis;
+      max-height: 3em;
     }
     .price {
       margin-top: 10px;
       color: @brand-primary;
+      text-transform: lowercase;
+      font-size: 1.5em;
     }
   }
 
   aside {
     .filters {
       list-style-type: none;
-      padding: 0px;
+      padding: 0;
 
       .accordion {
         .accordion-header {

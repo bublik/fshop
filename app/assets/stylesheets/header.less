@@ -1,13 +1,30 @@
 .header {
-  .navbar-default .navbar-nav a.active,
-  .navbar-default .navbar-nav a.active:hover,
-  .navbar-default .navbar-nav a.active:focus {
-    color: #555555;
-    background-color: #d7d7d7;
-    padding: 15px;
+  /* Small devices (tablets, 768px and up) */
+  //@media (min-width: @screen-sm-min) { ... }
+
+  /* Medium devices (desktops, 992px and up) */
+  @media (min-width: @screen-md-min) {
+    height: 185px;
   }
+
+  /* Large devices (large desktops, 1200px and up) */
+  //@media (min-width: @screen-lg-min) { ... }
+
+  .navbar-default {
+    background: url("menu_bg.jpg");
+    text-transform: uppercase;
+  }
+
+  .navbar-default .navbar-nav > li > a.active,
+  .navbar-default .navbar-nav > li > a.active:hover,
+  .navbar-default .navbar-nav > li > a.active:focus {
+    color: @link-color;
+    text-decoration: underline;
+  }
+
   .logo {
-    font-family: @font-family-lobster;
+    margin-top: 10px;
+    //font-family: @font-family-lobster;
     font-size: 72px;
     float: left;
     color: #000;
@@ -22,36 +39,18 @@
     font-size: 25px;
     font-weight: 300;
     text-align: center;
-    margin: 0px auto 0px auto;
+    margin: 0 auto;
     margin-top: 35px;
-  }
-
-  .navbar-collapse {
-    padding-left: 0px;
-    padding-right: 0px;
   }
 
   .form-search {
     position: relative;
-
-//    &:before {
-//      display: block;
-//      width: 18px;
-//      height: 18px;
-//      content: "\e003";
-//      font-family: 'Glyphicons Halflings';
-//      background-position: -48px 0;
-//      position: absolute;
-//      top: 8px;
-//      right: 25px;
-//      font-size: 18px;
-//      opacity: .7;
-//      z-index: 1000;
-//    }
-
+    margin: 0;
+    .input-group {
+      margin: 7px;
+    }
     input {
       width: 350px;
-      //padding-right: 50px;
     }
   }
 }

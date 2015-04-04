@@ -42,7 +42,7 @@ class ProductDecorator < Draper::Decorator
   end
 
   def currency
-    h.content_tag(:span, object.currency, class: 'price')
+    h.content_tag(:small, object.currency, class: 'price')
   end
 
   def admin_tags_list

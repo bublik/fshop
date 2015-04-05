@@ -1,26 +1,34 @@
-CKEDITOR.editorConfig = function( config )
-{
+CKEDITOR.editorConfig = function (config) {
   // Define changes to default configuration here. For example:
   config.language = 'en';
   // config.uiColor = '#AADC6E';
 
   config.skin = 'moono';
   config.toolbarGroups = [
-  //  { name: 'clipboard',   groups: [ 'clipboard', 'undo' ] },
- //   { name: 'editing',     groups: [ 'find', 'selection'] },
-    { name: 'links' },
-    { name: 'insert' },
-    { name: 'fastimage'},
-    { name: 'imagebrowser'},
+    //  { name: 'clipboard',   groups: [ 'clipboard', 'undo' ] },
+    //   { name: 'editing',     groups: [ 'find', 'selection'] },
+    {name: 'links'},
+    {name: 'insert'},
+    {name: 'fastimage'},
+    {name: 'imagebrowser'},
     //{ name: 'tools' },
     //{ name: 'document',	   groups: [ 'mode', 'document'] },
     //{ name: 'others' },
-   // '/',
-    { name: 'basicstyles', groups: [ 'basicstyles', 'cleanup' ] },
-    { name: 'paragraph',   groups: [ 'list', 'indent', 'blocks', 'align'] },
-    { name: 'colors' }
+    // '/',
+    {name: 'basicstyles', groups: ['basicstyles', 'cleanup']},
+    {name: 'paragraph', groups: ['list', 'indent', 'blocks', 'align']},
+    {name: 'colors'}
   ];
-
+  config.allowedContent = {
+    'h1 h2 h3 p blockquote strong em;' +
+      'a[!href];' +
+    'img(left,right)[!src,alt,width,height];' +
+    'table tr th td caption;' +
+    'span{!font-family};' +
+    'span{!color};' +
+    'span(!marker);' +
+    'del ins'
+  }
   // Remove some buttons provided by the standard plugins, which are
   // not needed in the Standard(s) toolbar.
   config.removeButtons = 'Underline,Subscript,Superscript,Iframe';
@@ -52,15 +60,15 @@ CKEDITOR.editorConfig = function( config )
   config.filebrowserUploadUrl = "/ckeditor/attachment_files";
 
   // Rails CSRF token
-  config.filebrowserParams = function(){
+  config.filebrowserParams = function () {
     var csrf_token, csrf_param, meta,
       metas = document.getElementsByTagName('meta'),
       params = new Object();
 
-    for ( var i = 0 ; i < metas.length ; i++ ){
+    for (var i = 0; i < metas.length; i++) {
       meta = metas[i];
 
-      switch(meta.name) {
+      switch (meta.name) {
         case "csrf-token":
           csrf_token = meta.content;
           break;
@@ -79,21 +87,21 @@ CKEDITOR.editorConfig = function( config )
     return params;
   };
 
-  config.addQueryString = function( url, params ){
+  config.addQueryString = function (url, params) {
     var queryString = [];
 
-    if ( !params ) {
+    if (!params) {
       return url;
     } else {
-      for ( var i in params )
-        queryString.push( i + "=" + encodeURIComponent( params[ i ] ) );
+      for (var i in params)
+        queryString.push(i + "=" + encodeURIComponent(params[i]));
     }
 
-    return url + ( ( url.indexOf( "?" ) != -1 ) ? "&" : "?" ) + queryString.join( "&" );
+    return url + ( ( url.indexOf("?") != -1 ) ? "&" : "?" ) + queryString.join("&");
   };
 
   // Integrate Rails CSRF token into file upload dialogs (link, image, attachment and flash)
-  CKEDITOR.on( 'dialogDefinition', function( ev ){
+  CKEDITOR.on('dialogDefinition', function (ev) {
     // Take the dialog name and its definition from the event data.
     var dialogName = ev.data.name;
     var dialogDefinition = ev.data.definition;
@@ -110,7 +118,7 @@ CKEDITOR.editorConfig = function( config )
     }
 
     if (dialogName == 'image') {
-      dialogDefinition.onOk = function(e) {
+      dialogDefinition.onOk = function (e) {
         var imageSrcUrl = e.sender.originalElement.$.src;
         var height = e.sender.originalElement.$.height;
         var width = e.sender.originalElement.$.width;
@@ -120,14 +128,14 @@ CKEDITOR.editorConfig = function( config )
           contentEditor = key;
         }
 
-        if(width > 200 || height > 200) {
+        if (width > 200 || height > 200) {
           var sub = "content_";
           var thumb = "thumb_";
-          var pos = imageSrcUrl.indexOf(sub,0);
+          var pos = imageSrcUrl.indexOf(sub, 0);
           var filename = imageSrcUrl.substr(pos + sub.length).replace(/\/$/, '');
           var path = imageSrcUrl.substr(0, (imageSrcUrl.length - filename.length - sub.length ));
-          imgHtml = CKEDITOR.dom.element.createFromHtml("<a href="+imageSrcUrl+" class='fancybox' rel='group'><img src=" + path+thumb+filename + " /></a>");
-        } else{
+          imgHtml = CKEDITOR.dom.element.createFromHtml("<a href=" + imageSrcUrl + " class='fancybox' rel='group'><img src=" + path + thumb + filename + " /></a>");
+        } else {
           imgHtml = CKEDITOR.dom.element.createFromHtml("<img src=" + imageSrcUrl + " />");
         }
 

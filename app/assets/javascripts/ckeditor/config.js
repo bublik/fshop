@@ -19,7 +19,7 @@ CKEDITOR.editorConfig = function (config) {
     {name: 'paragraph', groups: ['list', 'indent', 'blocks', 'align']},
     {name: 'colors'}
   ];
-  config.allowedContent = {
+  config.allowedContent =
     'h1 h2 h3 p blockquote strong em;' +
       'a[!href];' +
     'img(left,right)[!src,alt,width,height];' +
@@ -27,8 +27,8 @@ CKEDITOR.editorConfig = function (config) {
     'span{!font-family};' +
     'span{!color};' +
     'span(!marker);' +
-    'del ins'
-  }
+    'del ins';
+
   // Remove some buttons provided by the standard plugins, which are
   // not needed in the Standard(s) toolbar.
   config.removeButtons = 'Underline,Subscript,Superscript,Iframe';

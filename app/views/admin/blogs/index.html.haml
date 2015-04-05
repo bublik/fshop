@@ -13,7 +13,7 @@
         %section.post-content
           %p!= blog.preview
           %div
-            = link_to 'Show', blog, class: 'readmore', title: blog.title, target: 'blank', class: 'btn btn-default btn-xs'
+            = link_to 'Show', blog, class: 'readmore', title: blog.title, target: 'blank'
             = link_to 'Edit', edit_admin_blog_path(blog), class: 'btn btn-default btn-xs'
             = link_to 'Destroy', admin_blog_path(blog), :method => :delete, remote: true, :data => { :confirm => 'Are you sure?' }, class: 'btn btn-default btn-xs'
 .text-right

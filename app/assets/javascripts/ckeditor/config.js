@@ -5,24 +5,25 @@ CKEDITOR.editorConfig = function (config) {
 
   config.skin = 'moono';
   config.toolbarGroups = [
-    //  { name: 'clipboard',   groups: [ 'clipboard', 'undo' ] },
-    //   { name: 'editing',     groups: [ 'find', 'selection'] },
-    {name: 'links'},
-    {name: 'insert'},
     {name: 'fastimage'},
     {name: 'imagebrowser'},
-    //{ name: 'tools' },
+    {name: 'colors'},
+    {name: 'links'},
+    {name: 'insert'},
+    { name: 'tools' },
+    { name: 'clipboard',   groups: [ 'clipboard', 'undo' ] },
+    { name: 'editing',     groups: [ 'find', 'selection'] },
     //{ name: 'document',	   groups: [ 'mode', 'document'] },
     //{ name: 'others' },
     // '/',
     {name: 'basicstyles', groups: ['basicstyles', 'cleanup']},
-    {name: 'paragraph', groups: ['list', 'indent', 'blocks', 'align']},
-    {name: 'colors'}
+    {name: 'paragraph', groups: ['list', 'indent', 'blocks', 'align']}
+
   ];
   config.allowedContent =
     'h1 h2 h3 p blockquote strong em;' +
       'a[!href];' +
-    'img(left,right)[!src,alt,width,height];' +
+    'img(left,right)[!src,alt,width,height,align,style];' +
     'table tr th td caption;' +
     'span{!font-family};' +
     'span{!color};' +
@@ -34,7 +35,7 @@ CKEDITOR.editorConfig = function (config) {
   config.removeButtons = 'Underline,Subscript,Superscript,Iframe';
 
   // Simplify the dialog windows.
-  config.removeDialogTabs = 'image:advanced;link:advanced';
+ // config.removeDialogTabs = 'image:advanced;link:advanced';
 
 
   /* Filebrowser routes */
@@ -106,7 +107,6 @@ CKEDITOR.editorConfig = function (config) {
     var dialogName = ev.data.name;
     var dialogDefinition = ev.data.definition;
     var content, upload;
-
     if (CKEDITOR.tools.indexOf(['link', 'image', 'attachment', 'flash'], dialogName) > -1) {
       content = (dialogDefinition.getContents('Upload') || dialogDefinition.getContents('upload'));
       upload = (content == null ? null : content.get('upload'));
@@ -117,31 +117,33 @@ CKEDITOR.editorConfig = function (config) {
       }
     }
 
-    if (dialogName == 'image') {
-      dialogDefinition.onOk = function (e) {
-        var imageSrcUrl = e.sender.originalElement.$.src;
-        var height = e.sender.originalElement.$.height;
-        var width = e.sender.originalElement.$.width;
-        var imgHtml = {};
-        var contentEditor = '';
-        for (var key in CKEDITOR.instances) {
-          contentEditor = key;
-        }
-
-        if (width > 200 || height > 200) {
-          var sub = "content_";
-          var thumb = "thumb_";
-          var pos = imageSrcUrl.indexOf(sub, 0);
-          var filename = imageSrcUrl.substr(pos + sub.length).replace(/\/$/, '');
-          var path = imageSrcUrl.substr(0, (imageSrcUrl.length - filename.length - sub.length ));
-          imgHtml = CKEDITOR.dom.element.createFromHtml("<a href=" + imageSrcUrl + " class='fancybox' rel='group'><img src=" + path + thumb + filename + " /></a>");
-        } else {
-          imgHtml = CKEDITOR.dom.element.createFromHtml("<img src=" + imageSrcUrl + " />");
-        }
-
-        CKEDITOR.instances[contentEditor].insertElement(imgHtml);
-      };
-    }
+    //if (dialogName == 'image') {
+    //  dialogDefinition.onOk = function (e) {
+    //    console.log('e.sender.originalElement.$', e.sender.originalElement.$);
+    //    var imageSrcUrl = e.sender.originalElement.$.src;
+    //    var height = e.sender.originalElement.$.height;
+    //    var width = e.sender.originalElement.$.width;
+    //    var imgHtml = {};
+    //    var contentEditor = '';
+    //    for (var key in CKEDITOR.instances) {
+    //      console.log('IMAGE -> contentEditor',contentEditor);
+    //      contentEditor = key;
+    //    }
+    //
+    //    if (width > 200 || height > 200) {
+    //      var sub = "content_";
+    //      var thumb = "thumb_";
+    //      var pos = imageSrcUrl.indexOf(sub, 0);
+    //      var filename = imageSrcUrl.substr(pos + sub.length).replace(/\/$/, '');
+    //      var path = imageSrcUrl.substr(0, (imageSrcUrl.length - filename.length - sub.length ));
+    //      imgHtml = CKEDITOR.dom.element.createFromHtml("<a href=" + imageSrcUrl + " class='fancybox' rel='group'><img src=" + path + thumb + filename + " /></a>");
+    //    } else {
+    //      imgHtml = CKEDITOR.dom.element.createFromHtml("<img src=" + imageSrcUrl + " />");
+    //    }
+    //
+    //    CKEDITOR.instances[contentEditor].insertElement(imgHtml);
+    //  };
+    //}
 
   });
 };

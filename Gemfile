@@ -38,7 +38,7 @@ gem 'draper', '~> 1.3.1'
 gem 'kaminari'
 gem 'acts-as-taggable-on'
 gem 'friendly_id', '~> 5.0.0'
-gem 'ckeditor'
+gem 'ckeditor', github: 'galetahub/ckeditor'
 
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
 gem 'jbuilder', '~> 2.0'

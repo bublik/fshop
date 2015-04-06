@@ -50,6 +50,6 @@ class Admin::ShopsController < AdminController
   end
 
   def shop_params
-    params.require(:shop).permit(:name, :logo, :target_url, :shipping, :affiliate_network_id, :affiliate_network_merchant_id)
+    params.require(:shop).permit(:name, :logo, :opt, :target_url, :shipping, :affiliate_network_id, :affiliate_network_merchant_id)
   end
 end

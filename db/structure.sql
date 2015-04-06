@@ -276,7 +276,8 @@ CREATE TABLE shops (
     logo character varying,
     data_feeds_count integer DEFAULT 0,
     target_url character varying(500),
-    contact_email character varying
+    contact_email character varying,
+    opt boolean DEFAULT false
 );
 
 
@@ -717,4 +718,6 @@ INSERT INTO schema_migrations (version) VALUES ('20150319064446');
 INSERT INTO schema_migrations (version) VALUES ('20150319064651');
 
 INSERT INTO schema_migrations (version) VALUES ('20150321091450');
+
+INSERT INTO schema_migrations (version) VALUES ('20150406162456');
 

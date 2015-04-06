@@ -5,6 +5,10 @@ class ProductDecorator < Draper::Decorator
     _shop.name
   end
 
+  def opt
+    _shop.opt ? 'оптовая цена' : ''
+  end
+
   def shop_logo
     _shop.logo.url
   end

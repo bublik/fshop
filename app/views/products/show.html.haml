@@ -52,6 +52,7 @@
             .current-price
               = @product.price
               = @product.currency
+            .help-block= @product.opt
             %a.btn.btn-primary.form-control.btn-lg{:href => go_path(url: @product.link, shop_id: @product.shop_id), :rel => 'nofollow'}
               Подробней
               %i.glyphicon.glyphicon-share-alt

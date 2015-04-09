@@ -18,22 +18,12 @@
   %span ОДЕЖДА
 .new-items.item-list
   .row
-    - @clothing.each do |product|
-      .col-xs-15.col-sm-10.col-md-6.item-item
-        = link_to(product.preview_image, product, title: product.name)
-        = link_to(product.name, product, title: product.name, class: 'title')
-        = product.price
-        = product.currency
+    = render(collection: @clothing, partial: '/products/product')
 .splitter
   %span БЕЛЬЕ
 .new-items.item-list
   .row
-    - @linen.each do |product|
-      .col-xs-15.col-sm-10.col-md-6.item-item
-        = link_to(product.preview_image, product, title: product.name)
-        = link_to(product.name, product, title: product.name, class: 'title')
-        = product.price
-        = product.currency
+    = render(collection: @linen, partial: '/products/product')
 .splitter
   %span АКСЕССУАРЫ
 .mission Ожидается пополнение

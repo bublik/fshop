@@ -1,7 +1,15 @@
 .item-list {
-  margin-top: 20px;
+  margin-top: 1.5em;
   .item-item {
-    margin-bottom: 20px;
+    margin-bottom: 1.5em;
+    .item-box {
+      -webkit-box-shadow: 1px 1px 2px 0px rgba(173,173,173,0.33);
+      -moz-box-shadow: 1px 1px 2px 0px rgba(173,173,173,0.33);
+      box-shadow: 1px 1px 2px 0px rgba(173,173,173,0.33);
+      .price, .title {
+        margin-left: 0.5em;
+      }
+    }
     img {
       width: 100%
     }
@@ -12,7 +20,7 @@
       overflow: hidden;
       //white-space: nowrap;
       text-overflow: ellipsis;
-      max-height: 3em;
+      height: 3em;
     }
     .price {
       margin-top: 10px;

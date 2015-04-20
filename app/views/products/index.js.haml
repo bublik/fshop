@@ -6,3 +6,4 @@
     $('.pagination').remove();
 - else
   $('#products').html("#{j render(collection: @products, partial: '/products/product') }").hide().fadeIn(1000);
+  $('.pagination').html('');

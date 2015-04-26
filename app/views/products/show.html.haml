@@ -16,22 +16,12 @@
 %section.container.item-single
   .row{itemscope: '', itemtype: "http://schema.org/Product"}
     .col-xs-30.col-md-10
-      = @product.image('img-responsive')
-      %h4 Особенности
-      - @product.cached_tags.except(:occasion).each do |tag_type, tags|
-        .row.tags
-          .col-md-10.col-xs-10 #{t(tag_type)}:
-          .col-md-20.col-xs-20
-            - tags.each do |name|
-              = link_to(name, tag_products_path(type: @product.type, tag_type: tag_type, tag_name: name), title: name, class: 'btn btn-default btn-xs')
-      .addthis_sharing_toolbox
-      -#.fb-share-button{data: {href: request.url, layout: "button_count"}}
-      -#<div class="fb-comments" data-href="http://fashiondress.club/products/3603-angel-2244" data-numposts="5" data-width="380" data-colorscheme="light"></div>
+      = @product.image('img-responsive img-thumbnail')
     .col-xs-30.col-md-17
       %section
         %h1{itemprop: 'name'}= @product.name
         .row
-          .col-md-20.col-xs-10
+          .col-xs-32
             = session[:admin] && link_to('admin edit', edit_admin_product_path(@product), class: 'btn btn-xs btn-info')
             %dl
               - unless @product.brand.blank?
@@ -43,26 +33,24 @@
                   - (@product.cached_tags[:occasion] || []).each do |name|
                     = link_to(name, tag_products_path(tag_type: 'occasion', tag_name: name), title: name, class: 'btn btn-default btn-xs')
             = @product.description
-          .col-md-10.price-block{itemprop: 'offers', itemscope: '', itemtype: 'http://schema.org/Offer'}
-            %meta{itemprop: 'priceCurrency', content: @product.object.currency }
-            - unless @product.the_same_price?
-              .original-price
-                = @product.original_price
+            .price-block{itemprop: 'offers', itemscope: '', itemtype: 'http://schema.org/Offer'}
+              Цена:
+              %meta{itemprop: 'priceCurrency', content: @product.object.currency }
+              - unless @product.the_same_price?
+                %span.original-price
+                  = @product.original_price
+                  = @product.currency
+              %span.current-price
+                = @product.price
                 = @product.currency
-            .current-price
-              = @product.price
-              = @product.currency
-            .help-block= @product.opt
-            %a.btn.btn-primary.form-control.btn-lg{:href => go_path(url: @product.link, shop_id: @product.shop_id), :rel => 'nofollow'}
-              Подробней
-              %i.glyphicon.glyphicon-share-alt
-
+              .help-block= @product.opt
+              %a.buy.btn.btn-primary.btn-lg{href: go_path(url: @product.link, shop_id: @product.shop_id), rel: 'nofollow'} Подробнеe &rarr;
         %h4 О магазине
         .row
-          .col-md-10
-            %a{:href => "#{@shop.target_url}", :rel => 'nofollow'}
-              %img.img-responsive{:src => @product.shop_logo}/
-          .col-md-20= @product.shipping_info
+          .col-md-32
+            %a.pull-left{href: "#{@shop.target_url}", rel: 'nofollow', style: 'margin-right: 10px'}
+              %img.img-thumbnail.img-responsive{:src => @product.shop_logo}/
+            = @product.shipping_info
       - unless @coupons.empty?
         %section.coupons
           %header
@@ -78,6 +66,16 @@
           .row
             .col-xs-30.show-more
               %span Показать больше купонов
+      %h4 Особенности
+      .row.tags
+        - @product.cached_tags.except(:occasion).each do |tag_type, tags|
+          .col-md-5.col-xs-5 #{t(tag_type)}:
+          .col-md-10.col-xs-10
+            - tags.each do |name|
+              = link_to(name, tag_products_path(type: @product.type, tag_type: tag_type, tag_name: name), title: name, class: 'btn btn-default btn-xs')
+      %br/
+      .addthis_sharing_toolbox
+
       %section.item-faq.hidden-xs.hidden-sm
         -#%header%h4 Вопросы и ответы
         %dl

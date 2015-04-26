@@ -14,34 +14,44 @@
   }
 
   dd {
-    margin: 5px 0px 10px 0px;
+    margin: 5px 0 10px 0;
   }
 
   .tags {
+    > div {
+      margin-top: 5px;
+    }
     margin-bottom: 10px;
     .btn-xs {
       border-radius: 5px;
+      margin: 0 0 3px 0;
     }
   }
 
   .price-block {
-    text-align: center;
+    font-weight: bold;
+    color: @gray-dark;
     .original-price {
-      font-size: 20px;
+      font-size: 25px;
       text-decoration: line-through;
-      color: @gray-lighter;
+      color: @brand-primary;
     }
 
     .current-price {
-      font-size: 36px;
-      margin: 0px 0px 10px 0px;
+      font-size: 25px;
+      margin: 0 0 10px 0;
     }
-
-    .form-control {
-      height: 45px;
+    .btn-primary {
+      background: @gray-lighter;
+      color: @brand-primary;
+      padding: 0.5em 1.7em;
     }
+    //    .form-control {
+    //      height: 45px;
+    //    }
     .price {
-      color: @gray-dark;
+      color: @brand-primary;
+      text-transform: lowercase;
     }
   }
 
@@ -115,11 +125,13 @@
       .title {
         display: block;
         margin-top: 10px;
-        //color: @text-color;
+        color: @text-color;
       }
       .price {
         margin-top: 10px;
         color: @brand-primary;
+        font-size: 1.2em;
+        text-transform: lowercase;
       }
     }
   }

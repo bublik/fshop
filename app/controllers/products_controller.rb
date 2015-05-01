@@ -71,7 +71,6 @@ class ProductsController < ApplicationController
 
   private
   def set_class
-    params[:page] ||= 0
     @product_class = (params[:type] || 'Product').constantize
   end
 end

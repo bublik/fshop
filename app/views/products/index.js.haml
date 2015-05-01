@@ -3,7 +3,7 @@
   - if @products.next_page
     $('.pagination').html("#{j paginate(@products)}");
   - else
-    $('.pagination').remove();
+    $('.pagination').html('');
 - else
   $('#products').html("#{j render(collection: @products, partial: '/products/product') }").hide().fadeIn(1000);
   $('.pagination').html('');

@@ -9,7 +9,7 @@ module Searchable
     index_name "#{model_name.singular}-#{Rails.env}".downcase # how to remove index curl -XDELETE 'http://localhost:9200/products-development/'
     document_type model_name.singular
     inherited_class = self
-    settings index: {number_of_shards: 5,
+    settings index: {number_of_shards: 5, #number_of_replicas: 1,
                      analysis: {analyzer: {analyzer_startswith: {tokenizer: 'keyword', filter: 'lowercase'}}}} do
       mapping do
         indexes :price, type: 'integer'

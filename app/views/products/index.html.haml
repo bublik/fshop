@@ -16,6 +16,7 @@
     %aside#searchfilter.col-sm-15.col-md-6
       = form_tag '/products/search', id: 'filter_form', remote: true, method: :get do
         = check_box_tag :type, params[:type], 'checked', class: 'hidden skip'
+        = hidden_field_tag :page, 0
         - if params[:q].present?
           = check_box_tag :q, params[:q], params[:q].blank? ? false : 'checked', class: 'hidden'
         %ul#accordion.filters
